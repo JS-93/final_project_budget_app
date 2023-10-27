@@ -47,8 +47,8 @@ class Category(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, unique = True)
-    transactions = db.relationship('Transaction', backref='category', lazy=True)
-    budgets = db.relationship('Budget', backref='category', lazy=True)
+    # transactions = db.relationship('Transaction', backref='category', lazy=True)
+    # budgets = db.relationship('Budget', backref='category', lazy=True)
     
 
 class Transaction(db.Model, SerializerMixin):
@@ -60,7 +60,7 @@ class Transaction(db.Model, SerializerMixin):
     date = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    type = db.Column(db.Enum('Recurring', 'One-Time'), nullable=False)
+    category = db.relationship('Category', backref='transactions_backref')
 
 
 class Income(db.Model, SerializerMixin):
@@ -85,6 +85,7 @@ class Budget(db.Model, SerializerMixin):
     end_date = db.Column(db.DateTime, default=lambda: datetime.utcnow() + timedelta(days=30))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category = db.relationship('Category', backref='budgets_backref')
 
 
     def __repr__(self):

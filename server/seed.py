@@ -34,32 +34,39 @@ def seed_database():
     category6 = Category(name="Insurance")
     category7 = Category(name="Other")
 
-    transaction1 = Transaction(amount=1500.0, date=datetime.datetime.now(), user=user1, category=category1, type="Recurring", description="Rent payment")
-    transaction3 = Transaction(amount=100.0, date=datetime.datetime.now(), user=user1, category=category1, type="One-Time", description="Grocery shopping")
-    transaction4 = Transaction(amount=80.0, date=datetime.datetime.now(), user=user1, category=category4, type="One-Time", description="Movie night")
-    transaction2 = Transaction(amount=60.0, date=datetime.datetime.now(), user=user2, category=category1, type="One-Time", description="Groceries")
-    transaction5 = Transaction(amount=180.0, date=datetime.datetime.now(), user=user2, category=category1, type="Recurring", description="Electricity bill")
+    transaction1 = Transaction(amount=300.0, date=datetime.datetime.now(), user=user1, category=category1, description="Rent payment")
+    transaction3 = Transaction(amount=100.0, date=datetime.datetime.now(), user=user1, category=category2, description="Grocery shopping")
+    transaction4 = Transaction(amount=80.0, date=datetime.datetime.now(), user=user1, category=category4, description="Movie night")
+    transaction2 = Transaction(amount=60.0, date=datetime.datetime.now(), user=user2, category=category1, description="Groceries")
+    transaction5 = Transaction(amount=180.0, date=datetime.datetime.now(), user=user2, category=category1, description="Electricity bill")
 
    
-    income1 = Income(amount=3000.0, description="Monthly Salary", date=datetime.datetime.now(), user=user1)
-    income2 = Income(amount=2000.0, description="Freelance Work", date=datetime.datetime.now(), user=user2)
-    income3 = Income(amount=1500.0, description='Monthly Salary"', date=datetime.datetime.now(), user=user3)
+    income1 = Income(amount=4000.0, description="Monthly Salary", date=datetime.datetime.now(), user=user1)
+    income2 = Income(amount=4000.0, description="Freelance Work", date=datetime.datetime.now(), user=user2)
+    income3 = Income(amount=4000.0, description='Monthly Salary"', date=datetime.datetime.now(), user=user3)
 
     
-    budget1 = Budget(amount=2000.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user1, category=category1)
-    budget2 = Budget(amount=300.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user2, category=category2)
-    budget3 = Budget(amount=600.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user1, category=category4)
-    budget4 = Budget(amount=200.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user1, category=category3)
-    budget5 = Budget(amount=50.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user1, category=category6)
-    budget6 = Budget(amount=500.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user3, category=category1)
-    budget7 = Budget(amount=100.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user3, category=category2)
+    budgets_for_user1 = [
+        Budget(amount=400.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user1, category=category) 
+        for category in [category1, category2, category3, category4, category5, category6, category7]
+    ]
 
-    
+    budgets_for_user2 = [
+        Budget(amount=400.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user2, category=category) 
+        for category in [category1, category2, category3, category4, category5, category6, category7]
+    ]
+
+    budgets_for_user3 = [
+        Budget(amount=400.0, start_date=datetime.datetime.now(), end_date=datetime.datetime.now() + datetime.timedelta(days=30), user=user3, category=category) 
+        for category in [category1, category2, category3, category4, category5, category6, category7]
+]
     db.session.add_all([user1, user2, user3])
     db.session.add_all([category1, category2, category3, category4, category5, category6, category7])
     db.session.add_all([transaction1, transaction2, transaction3, transaction4, transaction5])
     db.session.add_all([income1, income2, income3])
-    db.session.add_all([budget1, budget2, budget3, budget4, budget5, budget6, budget7])
+    db.session.add_all(budgets_for_user1)
+    db.session.add_all(budgets_for_user2)
+    db.session.add_all(budgets_for_user3)
     db.session.commit()
 
 

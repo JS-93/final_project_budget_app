@@ -54,8 +54,19 @@ class Login(Resource):
         
         session['user_id'] = user.id
         user_data = user.to_dict(only=('id', 'username'))
-        user_data['transactions'] = [t.to_dict(only=('id', 'description', 'amount', 'date')) for t in user.transactions]
-        user_data['budgets'] = [b.to_dict(only=('id', 'amount', 'start_date', 'end_date')) for b in user.budgets]
+        user_data['transactions'] = [{
+            'id': t.id,
+            'amount': t.amount,
+            'date': t.date.isoformat(),
+            'category': t.category.name
+        } for t in user.transactions]
+        user_data['budgets'] = [{
+        'id': b.id,
+        'amount': b.amount,
+        'start_date': b.start_date.isoformat(),
+        'end_date': b.end_date.isoformat(),
+        'category': b.category.name  
+    } for b in user.budgets]
         user_data['income'] = [i.to_dict(only=('amount', 'description', 'date')) for i in user.incomes]
         return {'message': 'Logged in successfully.', 'user': user_data}, 200
 # clears session to logout user
@@ -70,11 +81,23 @@ class CheckSession(Resource):
         if not user_id:
             return {}, 401
         user = User.query.filter(User.id == user_id).first()
+       
         if not user:
             return {'message': 'User not found'}, 404
         user_data = user.to_dict(only=('id', 'username'))
-        user_data['transactions'] = [t.to_dict(only=('id', 'description', 'amount', 'date')) for t in user.transactions]
-        user_data['budgets'] = [b.to_dict(only=('id', 'amount', 'start_date', 'end_date')) for b in user.budgets]
+        user_data['transactions'] = [{
+            'id': t.id,
+            'amount': t.amount,
+            'date': t.date.isoformat(),
+            'category': t.category.name
+        } for t in user.transactions]
+        user_data['budgets'] = [{
+        'id': b.id,
+        'amount': b.amount,
+        'start_date': b.start_date.isoformat(),
+        'end_date': b.end_date.isoformat(),
+        'category': b.category.name  
+    } for b in user.budgets]
         user_data['income'] = [i.to_dict(only=('amount', 'description', 'date')) for i in user.incomes]
 
         return user_data, 200
@@ -86,8 +109,19 @@ class UserById(Resource):
         if not user:
             return {'message': 'User not found.'}, 401
         user_data = user.to_dict(only=('id', 'username'))
-        user_data['transactions'] = [t.to_dict(only=('id', 'description', 'amount', 'date')) for t in user.transactions]
-        user_data['budgets'] = [b.to_dict(only=('id', 'amount', 'start_date', 'end_date')) for b in user.budgets]
+        user_data['transactions'] = [{
+            'id': t.id,
+            'amount': t.amount,
+            'date': t.date.isoformat(),
+            'category': t.category.name
+        } for t in user.transactions]
+        user_data['budgets'] = [{
+        'id': b.id,
+        'amount': b.amount,
+        'start_date': b.start_date.isoformat(),
+        'end_date': b.end_date.isoformat(),
+        'category': b.category.name  
+    } for b in user.budgets]
         user_data['income'] = [i.to_dict(only=('amount', 'description', 'date')) for i in user.incomes]
 
         return user_data, 200
@@ -126,6 +160,11 @@ class GetCategories(Resource):
 class GetBudgets(Resource):
     def post(self):
         data = request.get_json()
+
+        current_budgets = Budget.query.filter_by(user_id=data['user_id']).all()
+
+        if len(current_budgets) >= 7:
+            return {'message': 'You cannot have more than 7 budgets'}, 400
         try:
             new_budget = Budget(
                 amount = data['amount'],
@@ -135,15 +174,47 @@ class GetBudgets(Resource):
             category = db.session.query(Category).filter_by(id=data['category_id']).first()
             if not category:
                 return {'message': 'category not found.'}, 401
-            category_name = category.name
-            
+           
             
             db.session.add(new_budget)
             db.session.commit()
-            return new_budget.to_dict(only=('amount', 'start_date', 'end_date', 'category_id')), 201
+            new_budget_data = new_budget.to_dict(only=('amount', 'start_date', 'end_date', 'id'))
+            new_budget_data['category'] = category.name
+            return new_budget_data, 201
         except ValueError:
             return {'errors': ['validation errors']}, 400
+
+class BudgetsById(Resource):
+    def patch(self, id):
         
+        
+        data = request.get_json()
+        user_id = data['user_id']
+        print(f"Received ID: {id}")
+        print(f"Received user_id: {user_id}")
+
+        budget = Budget.query.filter_by(id=id, user_id=user_id).first()
+        print(f"Received ID: {id}")
+        print(f"Received user_id: {user_id}")
+        if not budget:
+            return {'error': 'budget not found for user'}, 404
+        try:
+            budget.amount = data['amount']
+
+            db.session.add(budget)
+            db.session.commit()
+            return budget.to_dict(only=('amount', 'start_date', 'end_date')), 202
+        except ValueError:
+            return {'errors': ['validation errors']}, 400
+    def get(self, id):
+        budget = Budget.query.get(id)
+        if not budget:
+            return {'error': 'budget not found'}, 404
+        budget_data = budget.to_dict(only=('amount', 'start_date', 'end_date', 'id'))
+        budget_data['category'] = budget.category.name
+        return budget_data, 200
+
+api.add_resource(BudgetsById, '/budgets/<int:id>')
 api.add_resource(GetBudgets, '/budgets')
 api.add_resource(GetCategories, '/categories')
 api.add_resource(IncomeResource, '/income')
