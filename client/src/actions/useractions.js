@@ -13,3 +13,4 @@ export const updateCurrentUser = (updatedUser) => ({
     type: UPDATE_CURRENT_USER,
     payload: updatedUser
 })
+

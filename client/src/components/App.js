@@ -4,8 +4,11 @@ import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import BeginningPage from './BeginningPage';
 import { useDispatch } from 'react-redux'
-import { setUser } from '../actions/useractions'
+import { setUser } from '../actions/useractions';
 import PieCharts from './PieCharts';
+import Logout from './Logout';
+import AddIncome from './Income';
+import UpdateBudgets from './UpdateBudgets';
 
 const App = () => {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -20,6 +23,7 @@ const App = () => {
       return resp.json()
     })
     .then(data => {
+      console.log(data)
       if(data) {
         
         dispatch(setUser(data))
@@ -28,7 +32,7 @@ const App = () => {
     .catch(e => {
       console.error(e)
     })
-  }, [])
+  }, [dispatch])
 
   
  
@@ -36,7 +40,7 @@ const App = () => {
     <Switch>
     <Route exact path="/">
       {!currentUser ? <BeginningPage/>:
-        (currentUser.income && currentUser.income.length > 0) ? 
+        (currentUser.budgets && currentUser.budgets.length > 0) ? 
         <Redirect to="/piecharts" /> : <Redirect to="/budgets" />}
     </Route>
     <Route path="/budgets">
@@ -45,6 +49,15 @@ const App = () => {
     <Route path="/piecharts">
       {currentUser ? <PieCharts currentUser={currentUser} /> : <Redirect to="/" />}
     </Route>
+    <Route path="/logout" component={Logout} />
+    <Route path='/addincome'>
+    {currentUser ? <AddIncome currentUser={currentUser} /> : <Redirect to='/'/>}
+      </Route>
+      <Route path='/update'>
+        {currentUser ? <UpdateBudgets currentUser={currentUser}/> : <Redirect to='/'/>}
+      </Route>
+      <Route></Route>
+      
   </Switch>
   )
 }

@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 import CatBudgets from "./CatBudgets";
 import { useDispatch } from 'react-redux'
 import { updateCurrentUser } from "../actions/useractions";
+import { Link } from 'react-router-dom'
 
 
 const Budgets = ( { currentUser } ) => {
@@ -44,7 +45,7 @@ const Budgets = ( { currentUser } ) => {
         .then(data => {
             if(data) {
                 formik.resetForm()
-                setMessage(`$${data.amount} has been added to your income!`)
+                setMessage(`$${data.amount} has been added to your income from ${data.description}!`)
 
                 const updatedIncome = [...currentUser.income, data];
                 const updatedUser = {...currentUser, income: updatedIncome}
@@ -62,7 +63,7 @@ const Budgets = ( { currentUser } ) => {
 
 
 
-    return (<div>
+    return (<div><Link to='/logout'>Logout</Link>
         <h1>Please enter your income here</h1>
         <form onSubmit={formik.handleSubmit}>
             <input
@@ -83,8 +84,8 @@ const Budgets = ( { currentUser } ) => {
             <p style= {{ color: 'red' }}>{formik.errors.description}</p>
             <button type='Submit'>Add Income</button>
             <p>{message}</p>
-        </form>
-        <CatBudgets currentUser={currentUser}/>
+        </form>{currentUser.income && currentUser.income.length > 0 &&
+        <CatBudgets currentUser={currentUser}/>}
 
     </div>)
     
