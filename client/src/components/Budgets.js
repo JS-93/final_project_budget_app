@@ -48,8 +48,8 @@ const Budgets = ( { currentUser } ) => {
                 setMessage(`$${data.amount} has been added to your income from ${data.description}!`)
 
                 const updatedIncome = [...currentUser.income, data];
-                const updatedUser = {...currentUser, income: updatedIncome}
-                dispatch(updateCurrentUser(updatedUser))
+                
+                dispatch(updateCurrentUser({ ...currentUser, income: updatedIncome }));
             }
         })
         .catch(e => {

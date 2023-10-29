@@ -57,6 +57,7 @@ class Login(Resource):
         user_data['transactions'] = [{
             'id': t.id,
             'amount': t.amount,
+            'description': t.description,
             'date': t.date.isoformat(),
             'category': t.category.name
         } for t in user.transactions]
@@ -88,6 +89,7 @@ class CheckSession(Resource):
         user_data['transactions'] = [{
             'id': t.id,
             'amount': t.amount,
+            'description': t.description,
             'date': t.date.isoformat(),
             'category': t.category.name
         } for t in user.transactions]
@@ -112,6 +114,7 @@ class UserById(Resource):
         user_data['transactions'] = [{
             'id': t.id,
             'amount': t.amount,
+            'description': t.description,
             'date': t.date.isoformat(),
             'category': t.category.name
         } for t in user.transactions]
@@ -190,12 +193,10 @@ class BudgetsById(Resource):
         
         data = request.get_json()
         user_id = data['user_id']
-        print(f"Received ID: {id}")
-        print(f"Received user_id: {user_id}")
+      
 
         budget = Budget.query.filter_by(id=id, user_id=user_id).first()
-        print(f"Received ID: {id}")
-        print(f"Received user_id: {user_id}")
+        
         if not budget:
             return {'error': 'budget not found for user'}, 404
         try:
@@ -213,7 +214,71 @@ class BudgetsById(Resource):
         budget_data = budget.to_dict(only=('amount', 'start_date', 'end_date', 'id'))
         budget_data['category'] = budget.category.name
         return budget_data, 200
+class GetTransactions(Resource):
+    def post(self):
+        data = request.get_json()
+        print(data)
+        try:
 
+            category = db.session.query(Category).filter_by(id=data['category_id']).first()
+            if not category:
+                return {'message': 'category not found.'}, 401
+            
+            new_tran = Transaction(
+                amount = data['amount'],
+                description = data['description'],
+                user_id = data['user_id'],
+                category_id = data['category_id'],
+            )
+
+            db.session.add(new_tran)
+            db.session.commit()
+            new_tran_data = new_tran.to_dict(only=('id', 'description', 'amount', 'date'))
+            new_tran_data['category'] = category.name
+
+            return new_tran_data, 201
+        
+        except ValueError:
+            return {'errors': ['validation errors']}, 400
+        
+class TransactionById(Resource):
+    def patch(self, id):
+
+        data = request.get_json()
+        user_id = data['user_id']
+
+        transaction = Transaction.query.filter_by(id=id, user_id=user_id).first()
+
+        if not transaction:
+            return {'error': 'transaction not found for user'}, 404
+        
+        try:
+            transaction.amount = data['amount']
+
+            db.session.add(transaction)
+            db.session.commit()
+            return transaction.to_dict(only=('amount', 'description', 'date', 'id')), 202
+        except ValueError:
+            return {'errors': ['validation errors']}, 404
+        
+
+    def delete(self, id):
+        transaction = Transaction.query.get(id)
+
+        if not transaction:
+            return {'error': 'transaction not found.'}, 404
+        
+        try:
+            db.session.delete(transaction)
+            db.session.commit()
+
+            return {}, 204
+        
+        except ValueError:
+            return {'errors': ['validation errors']}, 400
+        
+api.add_resource(TransactionById, '/transactions/<int:id>')
+api.add_resource(GetTransactions, '/transactions')
 api.add_resource(BudgetsById, '/budgets/<int:id>')
 api.add_resource(GetBudgets, '/budgets')
 api.add_resource(GetCategories, '/categories')

@@ -9,6 +9,7 @@ import PieCharts from './PieCharts';
 import Logout from './Logout';
 import AddIncome from './Income';
 import UpdateBudgets from './UpdateBudgets';
+import Transaction from './Transaction';
 
 const App = () => {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -56,7 +57,9 @@ const App = () => {
       <Route path='/update'>
         {currentUser ? <UpdateBudgets currentUser={currentUser}/> : <Redirect to='/'/>}
       </Route>
-      <Route></Route>
+      <Route>
+        {currentUser ? <Transaction currentUser={currentUser}/> : <Redirect to='/'/>}
+      </Route>
       
   </Switch>
   )

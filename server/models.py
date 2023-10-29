@@ -57,7 +57,7 @@ class Transaction(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     description = db.Column(db.String())
     amount = db.Column(db.Float)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.DateTime, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     category = db.relationship('Category', backref='transactions_backref')
