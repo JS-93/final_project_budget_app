@@ -56,7 +56,7 @@ const UpdateBudgets = ( {currentUser} ) => {
         }
     }
 
-    return (<><Link to='/piecharts'>Homepage</Link>
+    return (<><Link to='/piecharts'>Dashboard</Link>
         <div>
           <h1>Update Budgets</h1>
           {currentUser.budgets.map((budget) => (

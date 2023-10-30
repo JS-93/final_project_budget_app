@@ -10,6 +10,8 @@ import Logout from './Logout';
 import AddIncome from './Income';
 import UpdateBudgets from './UpdateBudgets';
 import Transaction from './Transaction';
+import CategoryDetails from './CatDetails';
+
 
 const App = () => {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -39,30 +41,32 @@ const App = () => {
  
   return (
     <Switch>
-    <Route exact path="/">
-      {!currentUser ? <BeginningPage/>:
-        (currentUser.budgets && currentUser.budgets.length > 0) ? 
-        <Redirect to="/piecharts" /> : <Redirect to="/budgets" />}
-    </Route>
-    <Route path="/budgets">
-      {currentUser ? <Budgets currentUser={currentUser} /> : <Redirect to="/" />}
-    </Route>
-    <Route path="/piecharts">
-      {currentUser ? <PieCharts currentUser={currentUser} /> : <Redirect to="/" />}
-    </Route>
-    <Route path="/logout" component={Logout} />
-    <Route path='/addincome'>
-    {currentUser ? <AddIncome currentUser={currentUser} /> : <Redirect to='/'/>}
+      <Route exact path="/">
+        {!currentUser ? <BeginningPage/>:
+          (currentUser.budgets && currentUser.budgets.length > 0) ? 
+          <Redirect to="/piecharts" /> : <Redirect to="/budgets" />}
       </Route>
-      <Route path='/update'>
-        {currentUser ? <UpdateBudgets currentUser={currentUser}/> : <Redirect to='/'/>}
+      <Route exact path="/logout" component={Logout} />
+      <Route exact path="/budgets">
+        {currentUser ? <Budgets currentUser={currentUser} /> : <Redirect to="/" />}
       </Route>
-      <Route>
-        {currentUser ? <Transaction currentUser={currentUser}/> : <Redirect to='/'/>}
+      <Route exact path="/piecharts">
+        {currentUser ? <PieCharts currentUser={currentUser} /> : <Redirect to="/" />}
       </Route>
-      
-  </Switch>
-  )
+      <Route exact path="/addincome">
+        {currentUser ? <AddIncome currentUser={currentUser} /> : <Redirect to="/" />}
+      </Route>
+      <Route exact path="/update">
+        {currentUser ? <UpdateBudgets currentUser={currentUser}/> : <Redirect to="/" />}
+      </Route>
+      <Route exact path="/addtransactions" component={Transaction}>
+        {currentUser ? <Transaction currentUser={currentUser}/> : <Redirect to="/" />}
+      </Route>
+      <Route path="/category/:categoryName">
+        {currentUser ? <CategoryDetails currentUser={currentUser}/> : <Redirect to="/" />}
+      </Route>
+    </Switch>
+  );
 }
 
 export default App;

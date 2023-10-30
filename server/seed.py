@@ -26,11 +26,11 @@ def seed_database():
     user2.password='password456'
     user3.password='password789'
    
-    category1 = Category(name="Rent/Mortgage")
+    category1 = Category(name="Rent or Mortgage")
     category2 = Category(name="Groceries")
     category3 = Category(name="Utilities")
     category4 = Category(name="Entertainment")
-    category5 = Category(name="Transportation/Car")
+    category5 = Category(name="Transportation or Car")
     category6 = Category(name="Insurance")
     category7 = Category(name="Other")
 

@@ -11,33 +11,9 @@ const Transaction = ( { currentUser }) => {
     const [categories, setCategories] = useState([])
     const [showUpdate, setShowUpdate] = useState(false)
     const [tranAmounts, setTranAmounts] = useState({})
-    const [sortOrder, setSortOrder] = useState('Highest')
-    const [filterCategory, setFilterCategory] = useState('All')
     const dispatch = useDispatch()
+   
 
-    const handleSort = (event) => {
-        setSortOrder(event.target.value);
-    };
-
-    const handleCategoryFilterChange = (event) => {
-        setFilterCategory(event.target.value)
-    }
-
-    let sortedAndFilteredTransactions = currentUser.transactions;
-
-    if (filterCategory !== 'All') {
-        sortedAndFilteredTransactions = sortedAndFilteredTransactions.filter(
-            (transaction) => transaction.category === filterCategory
-        );
-    }
-
-    sortedAndFilteredTransactions = sortedAndFilteredTransactions.sort((a, b) => {
-        if (sortOrder === 'Highest') {
-            return b.amount - a.amount;
-        } else {
-            return a.amount - b.amount
-        }
-    })
 
     
     const handleDelete = (tranId) => {
@@ -90,14 +66,11 @@ const Transaction = ( { currentUser }) => {
                 if (data) {
                     console.log(tranId)
 
-                    const tranIndex = currentUser.transactions.findIndex(transaction => transaction.id === tranId);
+                    const updatedTransactions = currentUser.transactions.map((transaction) =>
+                    transaction.id === data.id ? { ...transaction, ...data } : transaction
+                );
 
-                    const updatedTransactions = [...currentUser.transactions];
-                    updatedTransactions[tranIndex] = {...currentUser.transactions[tranIndex], ...data}
-
-                    const updatedUser = {...currentUser, transactions: updatedTransactions};
-
-                    dispatch(updateCurrentUser(updatedUser))
+                dispatch(updateCurrentUser({ ...currentUser, transactions: updatedTransactions }));
                 }
             })
         }
@@ -172,7 +145,7 @@ const Transaction = ( { currentUser }) => {
         }, 0)
     }
     
-    return (<div><Link to='/logout'>Logout</Link><Link to='/piecharts'>Homepage</Link><div><h2>Total Transactions: ${totalTransactions(currentUser)}</h2></div>
+    return (<div><Link to='/piecharts'>Dashboard</Link><div><h2>Total Transactions: ${totalTransactions(currentUser)}</h2></div>
     <h1>Please enter new transactions here</h1>
     <form onSubmit={formik.handleSubmit}>
         <input
@@ -206,18 +179,7 @@ const Transaction = ( { currentUser }) => {
             
         </select><p>{formik.errors.category_id}</p>
         <button type='Submit'>Add transaction</button>
-    </form><select value={sortOrder} onChange={handleSort}>
-        <option value="Highest">Highest Amount</option>
-        <option value="Lowest">Lowest Amount</option>
-    </select>
-    <select value={filterCategory} onChange={handleCategoryFilterChange}>
-        <option value='All'>All Categories</option>
-        {categories.map((category) => (
-            <option key={category.id} value={category.name}>
-                {category.name}
-            </option>
-        ))}
-    </select>
+    </form>
     
     
     
@@ -231,7 +193,7 @@ const Transaction = ( { currentUser }) => {
         </tr>
         </thead>
         <tbody>
-            {sortedAndFilteredTransactions.map((transaction) => (
+            {currentUser.transactions.map((transaction) => (
                 <tr key={transaction.id}>
                     <td>{formatDate(transaction.date)}</td>
                     <td>{transaction.description}</td>

@@ -1,11 +1,16 @@
 import React from "react";
 import NavBar from "./NavBar";
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
+import { useHistory } from 'react-router-dom'
 
 const PieCharts = ( { currentUser }) => {
     const COLORS = ['#0088FE', '#00c49F', '#FFBB28', '#FF8042'];
     const totalIncome = currentUser.income.reduce((acc, curr) => acc + curr.amount, 0)
-    
+    const history = useHistory();
+
+    const handleMoreInfoClick = (categoryName) => {
+        history.push(`/category/${categoryName}`)
+    }
 
 
     const dataForCategoryWithTransactions = (budget, transactions) => {
@@ -33,7 +38,7 @@ const PieCharts = ( { currentUser }) => {
 
 
 
-    return (<><NavBar currentUser={currentUser}/><h1>Hello from homepage</h1>
+    return (<><NavBar currentUser={currentUser}/><h1>Welcome {currentUser.username}!</h1>
                 {currentUser.budgets.map(budget =>  {
                     const pieChartData = dataForCategoryWithTransactions(budget, currentUser.transactions);
                     return (
@@ -56,6 +61,7 @@ const PieCharts = ( { currentUser }) => {
                                 <Tooltip/>
                                 <Legend/>
                         </PieChart>
+                        <button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
                     </div>)
 })}
     
