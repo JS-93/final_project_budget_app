@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom'
 
 const CatBudgets = ( { currentUser } ) => {
     const [categories, setCategories] = useState([])
-    const [numInputsToShow, setNumInputsToShow] = useState(1);
     const history = useHistory()
     
 
@@ -13,13 +12,12 @@ const CatBudgets = ( { currentUser } ) => {
         .then(resp => resp.json())
         .then(data => {
             setCategories(data)
+            
         })
         .catch(e => console.error(e))
-    }, [])
+    }, [currentUser.budgets])
 
-  const handleAddNext = () => {
-    setNumInputsToShow((prevNum) => prevNum + 1)
-  }
+
 
   const totalIncome = (currentUser) => {
     return currentUser.income.reduce((total, currentIncome) => {
@@ -36,17 +34,41 @@ const CatBudgets = ( { currentUser } ) => {
         history.push('/piecharts')
     }
 
-    
+ 
 
+    const getRemainingCategories = () => {
+        return categories.filter(category =>
+            !currentUser.budgets.some(budget => budget.category === category.name)
+        );
+    };
 
-    return (<><h1>Total Income: ${totalIncome(currentUser)}</h1><h1>Total Budgets: ${totalBudgetAmount(currentUser)}</h1><div>{categories.slice(0, numInputsToShow).map((category) => (
-        <CatBudgetInput key={category.id} category={category} currentUser={currentUser} totalIncome={totalIncome}/>
-    ))}{ numInputsToShow < categories.length ? (
-        <button onClick={handleAddNext}>Go To Next Budget</button>
-    ) : (
-        <button onClick={handleGoToHomepage}>Go To Homepage</button>
-    )}
-        </div></>)
+    const remainingCategories = getRemainingCategories()
+
+    const allBudgetSet = remainingCategories.length === 0
+
+      return (
+        <>
+          <h1>Total Income: ${totalIncome(currentUser)}</h1>
+          <h1>Total Budgets: ${totalBudgetAmount(currentUser)}</h1>
+          <div>
+            {remainingCategories.map((category, index) => {
+             
+              
+              return (
+                <CatBudgetInput
+                  key={category.id}
+                  category={category}
+                  currentUser={currentUser}
+                  totalIncome={totalIncome}
+                />
+              );
+            })}
+            {allBudgetSet && (
+              <button onClick={handleGoToHomepage}>Go To Dashboard</button>
+            )}
+          </div>
+        </>
+      );
 }
 
 export default CatBudgets

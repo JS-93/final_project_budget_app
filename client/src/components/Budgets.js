@@ -59,35 +59,41 @@ const Budgets = ( { currentUser } ) => {
     })
 
 
+    const hasIncome =  currentUser.income.length > 0
 
 
+    return (
+        <div>
+          <Link to='/logout'>Logout</Link>
+          { !hasIncome ? (
+            <>
+              <h1>Please enter your income here</h1>
+              <form onSubmit={formik.handleSubmit}>
+                <input
+                  type='text'
+                  name='amount'
+                  value={formik.values.amount}
+                  onChange={formik.handleChange}
+                  placeholder='Monthly Income Here'
+                />
+                {formik.errors.amount && <p style={{ color: 'red' }}>{formik.errors.amount}</p>}
+                <input
+                  type='text'
+                  name='description'
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  placeholder="Income Source Here"
+                />
+                {formik.errors.description && <p style={{ color: 'red' }}>{formik.errors.description}</p>}
+                <button type='Submit'>Add Income</button>
+                {message && <p>{message}</p>}
+              </form>
+            </>) : 
+           
+            <CatBudgets currentUser={currentUser} />}
 
-
-    return (<div><Link to='/logout'>Logout</Link>
-        <h1>Please enter your income here</h1>
-        <form onSubmit={formik.handleSubmit}>
-            <input
-            type='text'
-            name='amount'
-            value={formik.values.amount}
-            onChange={formik.handleChange}
-            placeholder='Monthly Income Here'
-            />
-            <p style= {{ color: 'red' }}>{formik.errors.amount}</p>
-            <input
-            type='text'
-            name='description'
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            placeholder="Income Source Here"
-            />
-            <p style= {{ color: 'red' }}>{formik.errors.description}</p>
-            <button type='Submit'>Add Income</button>
-            <p>{message}</p>
-        </form>{currentUser.income && currentUser.income.length > 0 &&
-        <CatBudgets currentUser={currentUser}/>}
-
-    </div>)
+        </div>
+      );
     
 }
 

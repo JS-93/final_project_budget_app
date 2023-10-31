@@ -1,12 +1,17 @@
 import React from "react";
 import NavBar from "./NavBar";
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
+
 import { useHistory } from 'react-router-dom'
+import { dateFormatDate } from "../helpers/dateFormat";
+import SoloPieChart from "./SoloPieChart";
 
 const PieCharts = ( { currentUser }) => {
     const COLORS = ['#0088FE', '#00c49F', '#FFBB28', '#FF8042'];
+    
     const totalIncome = currentUser.income.reduce((acc, curr) => acc + curr.amount, 0)
     const history = useHistory();
+
+ 
 
     const handleMoreInfoClick = (categoryName) => {
         history.push(`/category/${categoryName}`)
@@ -34,39 +39,27 @@ const PieCharts = ( { currentUser }) => {
         ]
     }
     
- 
 
 
-
-    return (<><NavBar currentUser={currentUser}/><h1>Welcome {currentUser.username}!</h1>
-                {currentUser.budgets.map(budget =>  {
-                    const pieChartData = dataForCategoryWithTransactions(budget, currentUser.transactions);
-                    return (
-                    <div key={budget.id}>
-                        <h2>{budget.category}</h2>
-                        <PieChart width={400} height={400}>
-                            <Pie
-                                dataKey='value'
-                                isAnimationActive={true}
-                                data={pieChartData}
-                                cx={200}
-                                cy={200}
-                                outerRadius={90}
-                                fill='#8884d8'
-                                label={true}>
-                                    {pieChartData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
-                                    ))}
-                                </Pie>
-                                <Tooltip/>
-                                <Legend/>
-                        </PieChart>
-                        <button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
-                    </div>)
-})}
+    return (<>
+        <NavBar currentUser={currentUser} />
+        <h1>Welcome {currentUser.username}!</h1>
+        {currentUser.budgets.map((budget, index) => {
+          const pieChartData = dataForCategoryWithTransactions(budget, currentUser.transactions);
+          return (
+            <div key={budget.id}>
+              <h2>{budget.category} from {dateFormatDate(budget.start_date)} to {dateFormatDate(budget.end_date)}</h2>
+              <SoloPieChart pieChartData={pieChartData} COLORS={COLORS} />
+              <button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
+            </div>
+          );
+        })}
+      </>
+    );
+                    
+                    
     
-    
-                        </>)
+                        
 }
 
 

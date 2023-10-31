@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { updateCurrentUser } from "../actions/useractions";
 
-const CatBudgetInput = ( { category, currentUser, totalIncome } ) => {
+const CatBudgetInput = ( { category, currentUser } ) => {
     const [message, setMessage] = useState('')
     const [showAddButton, setShowAddButton] = useState(true);
     const dispatch = useDispatch()
@@ -36,7 +36,6 @@ const CatBudgetInput = ( { category, currentUser, totalIncome } ) => {
             .then(resp => resp.json())
             .then(data => {
                 if(data)
-                
                 setMessage(`Your budget for ${category.name} is now ${data.amount}.`)
                 setShowAddButton(false);
                 const updatedBudget = [...currentUser.budgets, data];
@@ -49,6 +48,8 @@ const CatBudgetInput = ( { category, currentUser, totalIncome } ) => {
             })
         }
     })
+
+   
 
     return ( <div>
         <label>{category.name}</label>

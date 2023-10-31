@@ -7,9 +7,11 @@ import re
 from config import db, bcrypt
 from datetime import datetime, timedelta
 
-
-
-
+user_categories = db.Table('user_categories',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('category_id', db.Integer, db.ForeignKey('categories.id'), primary_key=True)
+    
+)
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -21,6 +23,8 @@ class User(db.Model, SerializerMixin):
     transactions = db.relationship('Transaction', backref='user', lazy=True)
     incomes = db.relationship('Income', backref='user', lazy=True)
     budgets = db.relationship('Budget', backref='user', lazy=True)
+    categories = db.relationship('Category', secondary=user_categories, backref=db.backref('users', lazy=True))
+
     
 
     @hybrid_property
@@ -47,8 +51,7 @@ class Category(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, unique = True)
-    # transactions = db.relationship('Transaction', backref='category', lazy=True)
-    # budgets = db.relationship('Budget', backref='category', lazy=True)
+    
     
 
 class Transaction(db.Model, SerializerMixin):
@@ -61,6 +64,12 @@ class Transaction(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     category = db.relationship('Category', backref='transactions_backref')
+
+    @validates('amount')
+    def validate_amount(self, key, amount):
+        if not amount > 0:
+            raise AssertionError('Amount must be greater than 0.')
+        return amount
 
 
 class Income(db.Model, SerializerMixin):
@@ -86,6 +95,12 @@ class Budget(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     category = db.relationship('Category', backref='budgets_backref')
+
+    @validates('amount')
+    def validate_amount(self, key, amount):
+        if not amount >= 0:
+            raise AssertionError('Amount must be greater than or equal to 0.')
+        return amount
 
 
     def __repr__(self):

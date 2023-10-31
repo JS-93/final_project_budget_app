@@ -1,4 +1,31 @@
 export const formatDate = (isoString) => {
+    const date = new Date(isoString);
+
+  const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' }); 
+  const dayOfMonth = date.getDate();
+  const month = date.toLocaleDateString('en-US', { month: 'long' }); 
+  const year = date.getFullYear();
+
+ 
+  const getOrdinalSuffix = (day) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
+
+  const ordinalSuffix = getOrdinalSuffix(dayOfMonth);
+
+  return `${dayOfWeek}, ${month} ${dayOfMonth}${ordinalSuffix}, ${year}`;
+};
+
+
+export const dateFormatDate = (isoString) => {
+
+
     const months = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -14,8 +41,7 @@ export const formatDate = (isoString) => {
     const monthIndex = localDate.getMonth();
     const month = months[monthIndex];
     const year = localDate.getFullYear();
-    const hour = localDate.getHours();
-    const minute = localDate.getMinutes();
+   
 
    
     let daySuffix = "th";
@@ -26,10 +52,7 @@ export const formatDate = (isoString) => {
     const formattedDay = `${day}${daySuffix}`;
 
     
-    const hourFormatted = hour % 12 || 12;
-    const minuteFormatted = minute < 10 ? `0${minute}` : minute;
-    const amPM = hour < 12 ? 'AM' : 'PM';
 
+    return `${month} ${formattedDay}, ${year}`;
 
-    return `${month} ${formattedDay}, ${year} ${hourFormatted}:${minuteFormatted}${amPM}`;
-};
+}

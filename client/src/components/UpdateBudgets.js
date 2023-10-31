@@ -7,6 +7,7 @@ import { updateCurrentUser } from "../actions/useractions";
 const UpdateBudgets = ( {currentUser} ) => {
     const dispatch = useDispatch()
     const [budgetAmounts, setBudgetAmounts] = useState({})
+    const [message, setMessage] = useState({})
 
 
  
@@ -35,8 +36,12 @@ const UpdateBudgets = ( {currentUser} ) => {
             .then(resp => resp.json())
             .then(data => {
                 if (data) {
-                    console.log(budgetId)
-
+                    
+                    setMessage((prevMessages) => ({
+                      ...prevMessages,
+                      [budgetId]: `Updated budget to $${data.amount}!` 
+                    }));
+                     
                      
                         const budgetIndex = currentUser.budgets.findIndex(budget => budget.id === budgetId);
 
@@ -56,7 +61,7 @@ const UpdateBudgets = ( {currentUser} ) => {
         }
     }
 
-    return (<><Link to='/piecharts'>Dashboard</Link>
+    return (<><Link to='/piecharts'>Homepage</Link>
         <div>
           <h1>Update Budgets</h1>
           {currentUser.budgets.map((budget) => (
@@ -68,6 +73,7 @@ const UpdateBudgets = ( {currentUser} ) => {
                   defaultValue={budget.amount}
                   onChange={(event) => handleInputChange(budget.id, event)}
                 />
+                <p>{message[budget.id]}</p>
               </label>
               <button onClick={() => handleUpdateClick(budget.id)}>Update</button>
             </div>

@@ -11,6 +11,7 @@ const Transaction = ( { currentUser }) => {
     const [categories, setCategories] = useState([])
     const [showUpdate, setShowUpdate] = useState(false)
     const [tranAmounts, setTranAmounts] = useState({})
+    const [message, setMessage] = useState({})
     const dispatch = useDispatch()
    
 
@@ -64,14 +65,18 @@ const Transaction = ( { currentUser }) => {
             .then(resp => resp.json())
             .then(data => {
                 if (data) {
-                    console.log(tranId)
+                    setMessage((prevMessages) => ({
+                        ...prevMessages,
+                        [tranId]: `Updated transaction to $${data.amount}!` 
+                      }));
+                    
 
                     const updatedTransactions = currentUser.transactions.map((transaction) =>
                     transaction.id === data.id ? { ...transaction, ...data } : transaction
                 );
 
                 dispatch(updateCurrentUser({ ...currentUser, transactions: updatedTransactions }));
-                }
+                } 
             })
         }
     }
@@ -144,8 +149,10 @@ const Transaction = ( { currentUser }) => {
             return total + currentTransaction.amount;
         }, 0)
     }
+
     
-    return (<div><Link to='/piecharts'>Dashboard</Link><div><h2>Total Transactions: ${totalTransactions(currentUser)}</h2></div>
+    
+    return (<div><Link to='/piecharts'>Dashboard</Link><div><h2>Total Transactions: ${totalTransactions(currentUser).toFixed(2)}</h2></div>
     <h1>Please enter new transactions here</h1>
     <form onSubmit={formik.handleSubmit}>
         <input
@@ -212,6 +219,7 @@ const Transaction = ( { currentUser }) => {
                             </div>
                         )}
                         <button onClick={() => handleDelete(transaction.id)}>Delete</button>
+                        <p>{message[transaction.id]}</p>
                     </td>
                 </tr>
             ))}

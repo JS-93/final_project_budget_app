@@ -43,7 +43,7 @@ const App = () => {
     <Switch>
       <Route exact path="/">
         {!currentUser ? <BeginningPage/>:
-          (currentUser.budgets && currentUser.budgets.length > 0) ? 
+          (currentUser.budgets && currentUser.budgets.length === 7) ? 
           <Redirect to="/piecharts" /> : <Redirect to="/budgets" />}
       </Route>
       <Route exact path="/logout" component={Logout} />
