@@ -11,6 +11,7 @@ import AddIncome from './Income';
 import UpdateBudgets from './UpdateBudgets';
 import Transaction from './Transaction';
 import CategoryDetails from './CatDetails';
+import Compare from './Compare';
 
 
 const App = () => {
@@ -64,6 +65,9 @@ const App = () => {
       </Route>
       <Route path="/category/:categoryName">
         {currentUser ? <CategoryDetails currentUser={currentUser}/> : <Redirect to="/" />}
+      </Route>
+      <Route path='/comparesavings'>
+        {currentUser ? <Compare currentUser={currentUser}/> : <Redirect to='/'/>}
       </Route>
     </Switch>
   );

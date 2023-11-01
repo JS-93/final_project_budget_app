@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session, 
+from flask import request, session
 from flask_restful import Resource
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
@@ -104,7 +104,7 @@ class CheckSession(Resource):
 
         return user_data, 200
 
-# user get request to retrieve all budgets, income, and transactions for user
+
 class UserById(Resource):
     def get(self, id):
         user = User.query.get(id)
@@ -128,6 +128,19 @@ class UserById(Resource):
         user_data['income'] = [i.to_dict(only=('amount', 'description', 'date')) for i in user.incomes]
 
         return user_data, 200
+
+class GetUsers(Resource):
+    def get(self):
+
+        
+        user_data = []
+        for user in User.query.all():
+            user_dict = user.to_dict(only=('id',)) 
+            user_dict['transactions'] = [t.to_dict(only=('id', 'amount')) for t in user.transactions]
+            user_dict['incomes'] = [i.to_dict(only=('id', 'amount')) for i in user.incomes]
+            user_dict['budgets'] = [b.to_dict(only=('id', 'amount')) for b in user.budgets]
+            user_data.append(user_dict)
+        return user_data, 200 
 
 class CategoryById(Resource):
     def get(self, id):
@@ -307,6 +320,7 @@ class TransactionById(Resource):
         except ValueError:
             return {'errors': ['validation errors']}, 400
         
+api.add_resource(GetUsers, '/users')       
 api.add_resource(TransactionById, '/transactions/<int:id>')
 api.add_resource(GetTransactions, '/transactions')
 api.add_resource(BudgetsById, '/budgets/<int:id>')

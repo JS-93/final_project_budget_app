@@ -61,7 +61,7 @@ const UpdateBudgets = ( {currentUser} ) => {
 
                        
                         dispatch(updateCurrentUser(updatedUser));
-                        
+
                    
                 }
             })
@@ -90,7 +90,7 @@ const UpdateBudgets = ( {currentUser} ) => {
       }, 0)
   }
 
-    return (<><Link to='/piecharts'>Homepage</Link>
+    return (<><Link to='/piecharts'>Dashboard</Link>
         <div>
           <h1>Update Budgets</h1>
           <h2>Total Income: ${totalIncome(currentUser)}</h2>

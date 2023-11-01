@@ -46,7 +46,7 @@ const CatBudgetInput = ( { category, currentUser } ) => {
                 return resp.json();
               })
               .then(data => {
-                // Only update Redux state if the POST was successful
+               
                 setShowAddButton(false);
                 const updatedBudget = [...currentUser.budgets, data];
                 const updatedUser = {...currentUser, budgets: updatedBudget};
@@ -54,7 +54,7 @@ const CatBudgetInput = ( { category, currentUser } ) => {
                 resetForm();
               })
               .catch(error => {
-                // Set the error message for the user to see
+               
                 setMessage(error.message);
               });
             

@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./NavBar";
 
 import { useHistory } from 'react-router-dom'
-import { dateFormatDate } from "../helpers/dateFormat";
+import { formatDate } from "../helpers/dateFormat";
 import SoloPieChart from "./SoloPieChart";
 
 const PieCharts = ( { currentUser }) => {
@@ -19,7 +19,12 @@ const PieCharts = ( { currentUser }) => {
 
     const profit = (totalIncome - totalTransactions(currentUser)).toFixed(2)
 
-    console.log(profit)
+    const healthScore = `${((profit/totalIncome) * 100).toFixed(2)}%`
+
+    const handleCompareRouteClick = () => {
+        history.push('/comparesavings')
+    }
+    
 
     const handleMoreInfoClick = (categoryName) => {
         history.push(`/category/${categoryName}`)
@@ -52,7 +57,9 @@ const PieCharts = ( { currentUser }) => {
     return (<>
         <NavBar currentUser={currentUser} />
         <h1>Welcome {currentUser.username}!</h1>
-        <h2>OnGoing Savings For Month: ${profit}</h2>
+        <h2>Budget Range: {formatDate(currentUser.budgets[0].start_date)} to {formatDate(currentUser.budgets[0].end_date)}</h2>
+        <h2>Savings Rate: {healthScore}</h2><button onClick={() => handleCompareRouteClick()}>Compare Savings</button>
+        <h2>Savings: ${profit}</h2>
         {currentUser.budgets.map((budget, index) => {
           const pieChartData = dataForCategoryWithTransactions(budget, currentUser.transactions);
           return (
