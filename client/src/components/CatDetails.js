@@ -69,7 +69,8 @@ const CategoryDetails = ({ currentUser }) => {
       const chartData = processChartData(transactions, budget);
       
     
-    return <><Link to='/piecharts'>Dashboard</Link>
+    return transactions.length > 0 ? 
+    ( <><Link to='/piecharts'>Dashboard</Link>
     <AreaChart width={730} height={250} data={chartData}
       margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
       <defs>
@@ -107,7 +108,7 @@ const CategoryDetails = ({ currentUser }) => {
     </tbody>
         
         
-        </table></>
+        </table></> ): (<><Link to='/piecharts'>Dashboard</Link><h1>No transactions for {categoryName}</h1></>)
 }
 
 export default CategoryDetails

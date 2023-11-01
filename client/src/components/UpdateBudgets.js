@@ -22,7 +22,7 @@ const UpdateBudgets = ( {currentUser} ) => {
     
 
     const handleUpdateClick = (budgetId) => {
-        if (budgetAmounts[budgetId]) {
+        if (budgetAmounts[budgetId] !== undefined) {
             fetch(`/budgets/${budgetId}`, {
                 method: 'PATCH',
                 headers: {
@@ -33,7 +33,14 @@ const UpdateBudgets = ( {currentUser} ) => {
                     user_id: currentUser.id
                 })
             })
-            .then(resp => resp.json())
+            .then(resp => {
+              if (!resp.ok) {
+                return resp.json().then(data => {
+                  throw new Error(data.message || 'An error occurred while updating the budget.')
+                });
+              }
+              return resp.json()
+            })
             .then(data => {
                 if (data) {
                     
@@ -54,16 +61,40 @@ const UpdateBudgets = ( {currentUser} ) => {
 
                        
                         dispatch(updateCurrentUser(updatedUser));
-                        console.log(budgetId)
+                        
                    
                 }
+            })
+            .catch(e => {
+              if (e) {
+                setMessage((prevMessages) => ({
+                  ...prevMessages,
+                  [budgetId]: e.message
+                }));
+
+              }
             })
         }
     }
 
+
+    const totalIncome = (currentUser) => {
+      return currentUser.income.reduce((total, currentIncome) => {
+          return total + currentIncome.amount;
+      }, 0);
+    }
+
+    const totalBudgetAmount = (currentUser) => { 
+      return currentUser.budgets.reduce((total, currentBudget) => {
+          return total + currentBudget.amount;
+      }, 0)
+  }
+
     return (<><Link to='/piecharts'>Homepage</Link>
         <div>
           <h1>Update Budgets</h1>
+          <h2>Total Income: ${totalIncome(currentUser)}</h2>
+          <h2>Total Budgets: ${totalBudgetAmount(currentUser)}</h2>
           {currentUser.budgets.map((budget) => (
             <div key={budget.id}>
               <label>

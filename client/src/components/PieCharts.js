@@ -11,7 +11,15 @@ const PieCharts = ( { currentUser }) => {
     const totalIncome = currentUser.income.reduce((acc, curr) => acc + curr.amount, 0)
     const history = useHistory();
 
- 
+    const totalTransactions = () => {
+        return currentUser.transactions.reduce((total, currentTransaction) => {
+            return total + currentTransaction.amount;
+        }, 0)
+    }
+
+    const profit = (totalIncome - totalTransactions(currentUser)).toFixed(2)
+
+    console.log(profit)
 
     const handleMoreInfoClick = (categoryName) => {
         history.push(`/category/${categoryName}`)
@@ -35,7 +43,7 @@ const PieCharts = ( { currentUser }) => {
             
             {name: 'Income', value: totalIncome},
             {name: `Transactions in ${budget.category}`, value: transactionAmount},
-            {name: `Remaining amount for ${budget.category}`, value: budget.amount - transactionAmount}
+            {name: 'Remaining amount for Budget', value: budget.amount - transactionAmount}
         ]
     }
     
@@ -44,11 +52,12 @@ const PieCharts = ( { currentUser }) => {
     return (<>
         <NavBar currentUser={currentUser} />
         <h1>Welcome {currentUser.username}!</h1>
+        <h2>OnGoing Savings For Month: ${profit}</h2>
         {currentUser.budgets.map((budget, index) => {
           const pieChartData = dataForCategoryWithTransactions(budget, currentUser.transactions);
           return (
             <div key={budget.id}>
-              <h2>{budget.category} from {dateFormatDate(budget.start_date)} to {dateFormatDate(budget.end_date)}</h2>
+              <h2>{budget.category} Budget</h2>
               <SoloPieChart pieChartData={pieChartData} COLORS={COLORS} />
               <button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
             </div>

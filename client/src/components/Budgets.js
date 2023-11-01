@@ -44,7 +44,7 @@ const Budgets = ( { currentUser } ) => {
         .then(resp => resp.json())
         .then(data => {
             if(data) {
-                formik.resetForm()
+                resetForm();
                 setMessage(`$${data.amount} has been added to your income from ${data.description}!`)
 
                 const updatedIncome = [...currentUser.income, data];

@@ -105,7 +105,7 @@ const AddIncome = ( { currentUser } ) => {
                   onChange={formik.handleChange}
                   placeholder='Monthly Income Here'
                 />
-                {formik.errors.amount && <p style={{ color: 'red' }}>{formik.errors.amount}</p>}
+                {formik.errors.amount && <p style={{ color: 'black' }}>{formik.errors.amount}</p>}
                 <input
                   type='text'
                   name='description'
@@ -113,7 +113,7 @@ const AddIncome = ( { currentUser } ) => {
                   onChange={formik.handleChange}
                   placeholder="Income Source Here"
                 />
-                {formik.errors.description && <p style={{ color: 'red' }}>{formik.errors.description}</p>}
+                {formik.errors.description && <p style={{ color: 'black' }}>{formik.errors.description}</p>}
                 <button type='Submit'>Add Income</button>
                 {message && <p>{message}</p>}
               </form>

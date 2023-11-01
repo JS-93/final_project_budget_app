@@ -51,7 +51,7 @@ const Transaction = ( { currentUser }) => {
     }
 
     const handleUpdateClick = (tranId) => {
-        if (tranAmounts[tranId]) {
+        if (tranAmounts[tranId] !== undefined) {
             fetch(`/transactions/${tranId}`, {
                 method: 'PATCH',
                 headers: {
@@ -76,7 +76,15 @@ const Transaction = ( { currentUser }) => {
                 );
 
                 dispatch(updateCurrentUser({ ...currentUser, transactions: updatedTransactions }));
-                } 
+                }
+            })
+            .catch(e => {
+                if (e) {
+                    setMessage((prevMessages) => ({
+                        ...prevMessages,
+                        [tranId]: 'Transaction must be greater than  0.'
+                      }));
+                }
             })
         }
     }
@@ -156,7 +164,7 @@ const Transaction = ( { currentUser }) => {
     <h1>Please enter new transactions here</h1>
     <form onSubmit={formik.handleSubmit}>
         <input
-        type='text'
+        type='number'
         name='amount'
         value={formik.values.amount}
         onChange={formik.handleChange}
@@ -211,7 +219,7 @@ const Transaction = ( { currentUser }) => {
                         {showUpdate && (
                             <div className='updateTab'>
                                 <input
-                                type='text'
+                                type='number'
                                 defaultValue={transaction.amount}
                                 onChange={(event) => handleInputChange(transaction.id, event)}
                                 />

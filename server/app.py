@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session
+from flask import request, session, 
 from flask_restful import Resource
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import *
 
-# Signup route for user
+
 class Signup(Resource):
     def post(self):
         data = request.get_json()
@@ -36,7 +36,7 @@ class Signup(Resource):
             
         return {'message': 'User created successfully.'}, 201
         
-# Login route for user
+
 class Login(Resource):
     def post(self):
         data = request.get_json()
@@ -70,12 +70,12 @@ class Login(Resource):
     } for b in user.budgets]
         user_data['income'] = [i.to_dict(only=('amount', 'description', 'date')) for i in user.incomes]
         return {'message': 'Logged in successfully.', 'user': user_data}, 200
-# clears session to logout user
+
 class Logout(Resource):
     def get(self):
         session.clear()
         return {'message': 'Logged out successfully!'}, 200
-# checks session to keep user logged in
+
 class CheckSession(Resource):
     def get(self):
         user_id = session.get('user_id')
@@ -139,7 +139,7 @@ class CategoryById(Resource):
         category_data['transactions'] = [t.to_dict(only=('id', 'description', 'amount', 'date')) for t in category.transactions]
         category_data['budgets'] = [b.to_dict(only=('id', 'amount', 'start_date', 'end_date')) for b in category.budgets]
         return category_data, 200
-# route to create new income for user
+
 class IncomeResource(Resource):
     def post(self):
         data = request.get_json()
@@ -154,17 +154,26 @@ class IncomeResource(Resource):
             return new_income.to_dict(only=('amount', 'description', 'date'))
         except ValueError:
             return {'errors': ['validation errors']}, 400
-# route to get all category names/id's
+
 class GetCategories(Resource):
     def get(self):
         categories = [cat.to_dict(only=('id', 'name')) for cat in Category.query.all()]
         return categories, 200
-# route to create a new budget
+
 class GetBudgets(Resource):
     def post(self):
         data = request.get_json()
 
+        if data['amount'] < 0:
+            return {'message': 'Budget must be greater than or equal to 0.'}, 400
+
         current_budgets = Budget.query.filter_by(user_id=data['user_id']).all()
+        current_incomes = Income.query.filter_by(user_id=data['user_id']).all()
+        total_income = sum(income.amount for income in current_incomes)
+        total_budgets = sum(budget.amount for budget in current_budgets)
+
+        if total_budgets + data['amount'] > total_income:
+            return {'message': 'Total budgets cannot exceed total income.'}, 400
 
         if len(current_budgets) >= 7:
             return {'message': 'You cannot have more than 7 budgets'}, 400
@@ -174,6 +183,7 @@ class GetBudgets(Resource):
                 user_id = data['user_id'],
                 category_id = data['category_id'],
             )
+    
             category = db.session.query(Category).filter_by(id=data['category_id']).first()
             if not category:
                 return {'message': 'category not found.'}, 401
@@ -189,24 +199,43 @@ class GetBudgets(Resource):
 
 class BudgetsById(Resource):
     def patch(self, id):
-        
-        
         data = request.get_json()
-        user_id = data['user_id']
-      
-
-        budget = Budget.query.filter_by(id=id, user_id=user_id).first()
         
-        if not budget:
-            return {'error': 'budget not found for user'}, 404
+       
         try:
-            budget.amount = data['amount']
+            amount = float(data['amount'])
+        except (ValueError, TypeError):
+            return {'message': 'Amount must be a number.'}, 400
+        
+        
+        if amount < 0:
+            return {'message': 'Budget must be greater than or equal to 0.'}, 400
+        
+        
+        current_budgets = Budget.query.filter_by(user_id=data['user_id']).all()
+        current_incomes = Income.query.filter_by(user_id=data['user_id']).all()
+        
+        
+        total_income = sum(income.amount for income in current_incomes)
+        total_budgets = sum(budget.amount for budget in current_budgets if budget.id != id)
 
-            db.session.add(budget)
+        
+        if total_budgets + amount > total_income:
+            return {'message': 'Total budgets cannot exceed total income.'}, 400
+
+        
+        budget = Budget.query.filter_by(id=id, user_id=data['user_id']).first()
+        if not budget:
+            return {'message': 'Budget not found for user.'}, 404
+
+        
+        try:
+            budget.amount = amount
             db.session.commit()
-            return budget.to_dict(only=('amount', 'start_date', 'end_date')), 202
-        except ValueError:
-            return {'errors': ['validation errors']}, 400
+            return budget.to_dict(only=('amount', 'start_date', 'end_date')), 200
+        except Exception as e:
+            return {'message': 'An error occurred updating the budget.'}, 500
+        
     def get(self, id):
         budget = Budget.query.get(id)
         if not budget:
@@ -214,6 +243,7 @@ class BudgetsById(Resource):
         budget_data = budget.to_dict(only=('amount', 'start_date', 'end_date', 'id'))
         budget_data['category'] = budget.category.name
         return budget_data, 200
+    
 class GetTransactions(Resource):
     def post(self):
         data = request.get_json()
