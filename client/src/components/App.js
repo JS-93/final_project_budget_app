@@ -12,6 +12,8 @@ import UpdateBudgets from './UpdateBudgets';
 import Transaction from './Transaction';
 import CategoryDetails from './CatDetails';
 import Compare from './Compare';
+import Export from './Export';
+import FinancialSum from './FinancialSum';
 
 
 const App = () => {
@@ -38,36 +40,56 @@ const App = () => {
     })
   }, [dispatch])
 
-  
+  const isBudgetExpired = (budgets) => {
+   if (!budgets || budgets.length === 0) {
+    return false;
+   }
+    const latestBudgetEndDate = new Date(budgets[budgets.length - 1].end_date)
+
+    const today = new Date();
+    today.setHours(0,0,0,0) 
+    return latestBudgetEndDate < today
+  }
+
+  const budgetExpired = currentUser && currentUser.budgets && isBudgetExpired(currentUser.budgets);
  
   return (
     <Switch>
+      
       <Route exact path="/">
-        {!currentUser ? <BeginningPage/>:
-          (currentUser.budgets && currentUser.budgets.length === 7) ? 
-          <Redirect to="/piecharts" /> : <Redirect to="/budgets" />}
+        {!currentUser ? <BeginningPage /> :
+          budgetExpired ? <Redirect to="/export" /> :
+          (currentUser.budgets && currentUser.budgets.length === 7) ? <Redirect to="/piecharts" /> :
+          <Redirect to="/budgets" />
+        }
       </Route>
       <Route exact path="/logout" component={Logout} />
       <Route exact path="/budgets">
-        {currentUser ? <Budgets currentUser={currentUser} /> : <Redirect to="/" />}
+        {currentUser && !budgetExpired ? <Budgets currentUser={currentUser} /> : <Redirect to="/export" />}
       </Route>
       <Route exact path="/piecharts">
-        {currentUser ? <PieCharts currentUser={currentUser} /> : <Redirect to="/" />}
+        {currentUser && !budgetExpired ? <PieCharts currentUser={currentUser} /> : <Redirect to="/export" />}
       </Route>
       <Route exact path="/addincome">
-        {currentUser ? <AddIncome currentUser={currentUser} /> : <Redirect to="/" />}
+        {currentUser && !budgetExpired ? <AddIncome currentUser={currentUser} /> : <Redirect to="/export" />}
       </Route>
       <Route exact path="/update">
-        {currentUser ? <UpdateBudgets currentUser={currentUser}/> : <Redirect to="/" />}
+        {currentUser && !budgetExpired ? <UpdateBudgets currentUser={currentUser} /> : <Redirect to="/export" />}
       </Route>
       <Route exact path="/addtransactions" component={Transaction}>
-        {currentUser ? <Transaction currentUser={currentUser}/> : <Redirect to="/" />}
+        {currentUser && !budgetExpired ? <Transaction currentUser={currentUser} /> : <Redirect to="/export" />}
       </Route>
       <Route path="/category/:categoryName">
-        {currentUser ? <CategoryDetails currentUser={currentUser}/> : <Redirect to="/" />}
+        {currentUser && !budgetExpired ? <CategoryDetails currentUser={currentUser} /> : <Redirect to="/export" />}
       </Route>
       <Route path='/comparesavings'>
-        {currentUser ? <Compare currentUser={currentUser}/> : <Redirect to='/'/>}
+        {currentUser && !budgetExpired ? <Compare currentUser={currentUser} /> : <Redirect to="/export" />}
+      </Route>
+      <Route path='/export'>
+        {currentUser && budgetExpired ? <Export currentUser={currentUser} /> : <Redirect to='/' />}
+      </Route>
+      <Route path='/finance'>
+        {currentUser && budgetExpired ? <FinancialSum currentUser={currentUser} /> : <Redirect to='/' />}
       </Route>
     </Switch>
   );

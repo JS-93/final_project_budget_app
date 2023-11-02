@@ -58,7 +58,7 @@ const Budgets = ( { currentUser } ) => {
         }
     })
 
-
+    
     const hasIncome =  currentUser.income.length > 0
 
 

@@ -3,15 +3,16 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session, jsonify
+from flask import request, session, make_response
 from flask_restful import Resource
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
 
+
 from config import app, db, api
 from models import *
-import os
+
 
 
 class Signup(Resource):
@@ -325,48 +326,6 @@ class TransactionById(Resource):
         except ValueError:
             return {'errors': ['validation errors']}, 400
         
-class GetMonthly(Resource):
-    def get(self, id, year, month):
-        
-        user = User.query.get(id)
-        if not user:
-            return {'message': 'user not found'}, 404
-        
-        start_date = datetime(year, month, 1)
-        end_date = datetime(year, month + 1, 1) if month < 12 else datetime(year + 1, 1, 1)
-
-        transactions = Transaction.query.filter(
-            Transaction.date >= start_date,
-            Transaction.date < end_date,
-            Transaction.user_id == user.id
-        ).all()
-
-        budgets = Budget.query.filter(
-            Budget.start_date >= start_date,
-            Budget.end_date < end_date,
-            Budget.user_id == user.id
-        ).all()
-
-        total_spent = sum(t.amount for t in transactions)
-        total_budgeted = sum(b.amount for b in budgets)
-
-        category_spendings = {
-            category.name: sum(t.amount for t in transactions if t.category_id ==category.id) for category in Category.query.all()
-        }
-
-        category_budgets = {
-            category.name: sum(b.amount for b in budgets if b.category_id ==category.id) for category in Category.query.all()
-        }
-
-        summary_data = {
-            'total_spent': total_spent,
-            'total_budgeted': total_budgeted,
-            'category_spendings': category_spendings,
-            'category_budgets': category_budgets
-        }
-
-        return summary_data, 200
-    
 
 
 
@@ -406,8 +365,7 @@ class ClearData(Resource):
         return clear_user_data_by_id(user_id)
        
 
-api.add_resource(ClearData, '/clear_data/<int:user_id>')
-api.add_resource(GetMonthly, '/summary/<int:id>/<int:year>/<int:month>')        
+api.add_resource(ClearData, '/clear_data/<int:user_id>')      
 api.add_resource(GetUsers, '/users')       
 api.add_resource(TransactionById, '/transactions/<int:id>')
 api.add_resource(GetTransactions, '/transactions')

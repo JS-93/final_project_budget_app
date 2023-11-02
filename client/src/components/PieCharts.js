@@ -8,6 +8,8 @@ import SoloPieChart from "./SoloPieChart";
 const PieCharts = ( { currentUser }) => {
     const COLORS = ['#0088FE', '#00c49F', '#FFBB28', '#FF8042'];
     
+    
+    
     const totalIncome = currentUser.income.reduce((acc, curr) => acc + curr.amount, 0)
     const history = useHistory();
 

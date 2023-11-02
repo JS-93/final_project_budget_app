@@ -28,7 +28,7 @@ def create_past_transactions(user, categories, num_transactions=5):
     for category in categories:
         for _ in range(num_transactions):
             description = fake.sentence(nb_words=3)
-            transaction_date = datetime(2023, 10, 2)
+            transaction_date = datetime(2022, 12, 2)
             amount = round(random.uniform(10.0, 200.0), 1)
             transactions.append(Transaction(
                 user=user,
@@ -85,11 +85,11 @@ def seed_database():
     income1 = Income(amount=4000.0, description="Monthly Salary", user=user1)
     income2 = Income(amount=4000.0, description="Freelance Work", user=user2)
     income3 = Income(amount=4000.0, description="Monthly Salary", user=user3)
-    income4 = Income(amount=4000.0, description="Work", user=user4, date=datetime(2023, 10, 1))
+    income4 = Income(amount=4000.0, description="Work", user=user4, date=datetime(2022, 12, 1))
     db.session.add_all([income1, income2, income3, income4])
 
     for category in categories:
-        past_budget = Budget(amount=400.0, user=user4, category=category, start_date=datetime(2023, 10, 1), end_date=datetime(2023, 10, 31))
+        past_budget = Budget(amount=400.0, user=user4, category=category, start_date=datetime(2022, 12, 1), end_date=datetime(2022, 12, 31))
         db.session.add(past_budget)
 
 
