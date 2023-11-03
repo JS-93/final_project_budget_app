@@ -1,7 +1,159 @@
-:root {
-  --bg: #282c34;
-  --header: #fff;
-  --link: #61dafb;
-  --text: hsla(0, 0%, 100%, 0.88);
+
+/* beginning page start */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; 
+  height: 100%; 
+  width: 100%;
 }
 
+.background {
+  background: linear-gradient(90deg, #d2cccc, #101471);
+  height: 100vh;
+  
+}
+
+.title {
+  position: absolute;
+  margin-top: 160px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 59px;
+  color: rgb(228, 227, 216);
+}
+
+.background_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.beginning_form {
+  margin-top: 900px;
+  position: absolute;
+  border: none;
+  padding: 100px;
+  background-color: rgba(0, 0, 0, 0.2); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0px 9px 5px #5C5696
+}
+
+.beginning_form_title {
+  margin-top: -30px;
+  margin-bottom: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(23, 21, 21);
+}
+
+.username_input {
+  border: none;
+  border-bottom: 2px solid black;
+  padding: 10px;
+  font-weight: 700;
+  width: 200px;
+}
+
+.username_input:active,
+.username_input:hover,
+.username_input:focus {
+  outline: none;
+  border-bottom-color:#101471;
+}
+
+.beginning_form_button {
+background: #fff;
+font-size: 14px;
+margin-top: 30px;
+padding: 15px;
+border: none;
+text-transform: uppercase;
+font-weight: 700;
+display: flex;
+align-items: center;
+width: 100%;
+}
+
+.beginning_form_button:active,
+.beginning_form_button:focus,
+.beginning_form_button:hover {
+
+  
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  cursor:pointer;
+
+}
+
+.beginning_form_input_group{
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.fa_user{
+  color: white;
+  font-size: 24px;
+  margin-left: -30px;
+  position: absolute;
+}
+
+.fa_password{
+  color: white;
+  font-size: 24px;
+  margin-left: -30px;
+  position: absolute;
+}
+
+.begin_form_error{
+  position:absolute;
+  margin-top: 360px;
+  color: white;
+  font-weight: 1;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.begin_formik_errors_email{
+  position: absolute;
+  margin-top: 80px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.begin_formik_errors_username{
+  position: absolute;
+  margin-top: -25px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.begin_formik_errors_password{
+  position: absolute;
+  margin-top: 80px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.begin_formik_errors_login_username{
+  position: absolute;
+  margin-top: 80px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.begin_formik_errors_login_password{
+  position: absolute;
+  margin-top: 80px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.begin_form_message{
+  position: absolute;
+  margin-top: 440px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+
+}

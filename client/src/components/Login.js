@@ -3,9 +3,13 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '../actions/useractions'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import Signup from "./Signup";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
     const [isError, setIsError] = useState(false);
+    const [newUser, setNewUser] = useState(false)
     const dispatch = useDispatch();
 
 
@@ -51,30 +55,41 @@ const Login = () => {
             })
         }
     })
-    return <div>
-            <h1>Login Here</h1>
+    return <>{!newUser ? (
+           
+            <div className="beginning_form">
+            
             <form onSubmit={formik.handleSubmit}>
+            <h1 className='beginning_form_title'>Login Here</h1>
+            <div className='beginning_form_input_group'>
+            <FontAwesomeIcon icon={faUser} className='fa_user'/>
                 <input
+                className='username_input'
                 type='text'
                 name='username'
                 value={formik.values.username}
                 onChange={formik.handleChange}
                 placeholder='Username'
                 />
-                <p style= {{ color: 'red' }}>{formik.errors.username}</p>
+                <p className='begin_formik_errors_login_username'>{formik.errors.username}</p>
+                </div>
+                <div className='beginning_form_input_group'>
+            <FontAwesomeIcon icon={faLock} className='fa_password'/>
                 <input
+                className='username_input'
                 type='password'
                 name='password'
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 placeholder='Password'
                 />
-                <p style= {{ color: 'red' }}>{formik.errors.password}</p>
-                <button type='submit'>Login</button>
+                <p className="begin_formik_errors_login_password">{formik.errors.password}</p>
+                </div>
+                <button className='beginning_form_button' type='submit'>Login</button><button className='beginning_form_button' onClick={() => setNewUser(true)}>New User?</button>
             </form>
-            {isError && <p>Username or password not found.</p>}
+            {isError && <p className='begin_form_error'>Username or password not found.</p>}
             
-        </div>
+        </div>) : (<Signup/>)}</>
     
 }
 

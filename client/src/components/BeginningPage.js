@@ -1,13 +1,15 @@
 import React from "react";
 import Login from "./Login";
-import Signup from "./Signup";
+
 
 const BeginningPage = () => {
-    return (<div>
-        <h1>Welcome to the Budget App</h1>
+
+    return (
+    
+    <div className='background'><div className='background_wrapper'>
+        <h1 className='title'>Welcome to the Budget App</h1>
         <Login/>
-        <Signup/>
-    </div>)
+    </div></div>)
 }
 
 

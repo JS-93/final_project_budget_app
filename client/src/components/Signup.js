@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import Login from './Login'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Signup = () => {
     const [message, setMessage] = useState('')
+    const [showLogin, setShowLogin] = useState(false)
 
     const SignUpSchema = Yup.object().shape({
         username: Yup.string()
@@ -51,38 +55,55 @@ const Signup = () => {
             
         }
     })
+    if (showLogin) {
+        return <Login />;
+    }
 
-    return ( <div>
-        <h1>Sign up Here</h1>
+    return <div className='beginning_form'>
+        
         <form onSubmit={formik.handleSubmit}>
+        <h1 className='beginning_form_title'>Sign up Here</h1>
+        <div className='beginning_form_input_group'>
+        <FontAwesomeIcon icon={faEnvelope} className='fa_user'/>
             <input
+            className='username_input'
             type='text'
             name='email'
             value={formik.values.email}
             onChange={formik.handleChange}
             placeholder='Email here'
             />
-            <p style= {{ color: 'red' }}>{formik.errors.email}</p>
+            <p className='begin_formik_errors_email'>{formik.errors.email}</p>
+            </div>
+            <div className='beginning_form_input_group'>
+            <FontAwesomeIcon icon={faUser} className='fa_user'/>
             <input
+            className='username_input'
             type='text'
             name='username'
             value={formik.values.username}
             onChange={formik.handleChange}
             placeholder='Username here'
-            />
-            <p style= {{ color: 'red' }}>{formik.errors.username}</p>
+            /></div>
+            <p className='begin_formik_errors_username'>{formik.errors.username}</p>
+            <div className='beginning_form_input_group'>
+            <FontAwesomeIcon icon={faLock} className='fa_password'/>
             <input
+            className='username_input'
             type='password'
             name='password'
             value={formik.values.password}
             onChange={formik.handleChange}
             placeholder='Password here'
             />
-            <p style= {{ color: 'red' }}>{formik.errors.password}</p>
-            <button type='submit'>Sign up</button>
+            <p className='begin_formik_errors_password'>{formik.errors.password}</p>
+            </div>
+            <button className='beginning_form_button' type='submit'>Sign up</button><button className='beginning_form_button' onClick={() => setShowLogin(true)}>Back to login</button>
         </form>
-        <p>{message}</p>
-    </div>)
+        <p className='begin_form_message'>{message}</p>
+    </div>
+
+    
 
 }
 
