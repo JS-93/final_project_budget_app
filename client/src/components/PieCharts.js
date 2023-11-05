@@ -4,7 +4,7 @@ import NavBar from "./NavBar";
 import { useHistory } from 'react-router-dom'
 import { formatDate } from "../helpers/dateFormat";
 import SoloPieChart from "./SoloPieChart";
-import { Button } from '@chakra-ui/react'
+
 
 const PieCharts = ( { currentUser }) => {
     const COLORS = ['#50bb7f', '#FF4C29', '#FBF8BE', '#FF8042'];
@@ -75,7 +75,7 @@ const PieCharts = ( { currentUser }) => {
             <div key={budget.id} className='pie_chart_item'>
               <h2 className='piechart_category_name'>{budget.category} Budget</h2>
               <SoloPieChart pieChartData={pieChartData} COLORS={COLORS} />
-              <Button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</Button>
+              <button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
             </div>
           );
         })}

@@ -10,7 +10,7 @@ import { formatDate } from "../helpers/dateFormat";
 
 const Transaction = ( { currentUser }) => {
     const [categories, setCategories] = useState([])
-    const [showUpdate, setShowUpdate] = useState(false)
+    const [editingTransactionId, setEditingTrnasactionId] = useState(null)
     const [tranAmounts, setTranAmounts] = useState({})
     const [message, setMessage] = useState({})
     const dispatch = useDispatch()
@@ -40,9 +40,7 @@ const Transaction = ( { currentUser }) => {
     }
 
 
-    const toggleUpdate = () => {
-            setShowUpdate(!showUpdate)
-    }
+  
 
     const handleInputChange = (tranId, event) => {
         setTranAmounts(prevAmounts => ({
@@ -159,9 +157,13 @@ const Transaction = ( { currentUser }) => {
         }, 0)
     }
 
+    const toggleUpdate = (transactionId) => {
+        setEditingTrnasactionId((prev) => (prev === transactionId ? null : transactionId));
+    }
+
     
     
-    return (<div><Link to='/piecharts'>Dashboard</Link><div><h2>Total Transactions: ${totalTransactions(currentUser).toFixed(2)}</h2></div>
+    return (<div className="transactions_background"><Link to='/piecharts'>Dashboard</Link><div><h2>Total Transactions: ${totalTransactions(currentUser).toFixed(2)}</h2></div>
     <h1>Please enter new transactions here</h1>
     <form onSubmit={formik.handleSubmit}>
         <input
@@ -199,7 +201,7 @@ const Transaction = ( { currentUser }) => {
     
     
     
-    <table><thead>
+    <table className='transaction_table'><thead>
         <tr>
             <th>Date</th>
             <th>Description</th>
@@ -213,22 +215,25 @@ const Transaction = ( { currentUser }) => {
                 <tr key={transaction.id}>
                     <td>{formatDate(transaction.date)}</td>
                     <td>{transaction.description}</td>
-                    <td>{transaction.amount}</td>
+                    <td>${(transaction.amount).toFixed(2)}</td>
                     <td>{transaction.category}</td>
                     <td>
-                        <button onClick={toggleUpdate}>Update</button>
-                        {showUpdate && (
+                        <button onClick={() => toggleUpdate(transaction.id)}>Update</button>
+                        {editingTransactionId === transaction.id && (
                             <div className='updateTab'>
+                                <button className='x_button' onClick={() => setEditingTrnasactionId(null)}>X</button>
                                 <input
+                                className='update_tab_input'
                                 type='number'
                                 defaultValue={transaction.amount}
                                 onChange={(event) => handleInputChange(transaction.id, event)}
                                 />
                                 <button onClick={() => handleUpdateClick(transaction.id)}>Update Transaction</button>
+                                <p className='t_update_message'>{message[transaction.id]}</p>
                             </div>
                         )}
                         <button onClick={() => handleDelete(transaction.id)}>Delete</button>
-                        <p>{message[transaction.id]}</p>
+                        
                     </td>
                 </tr>
             ))}

@@ -430,3 +430,121 @@ width: 100%;
 /* beginning of transactions css */
 
 
+.transactions_background {
+  background: linear-gradient(90deg, #234E70, #FBF8BE);
+  height: 300vh;
+}
+
+.transaction_table {
+  width: 70%;
+  border-collapse: collapse;
+  background-color: rgb(177, 176, 176);
+  margin: 0 auto;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.transaction_table thead tr {
+  background-color: gray;
+  color: #ffffff;
+  text-align: left;
+}
+
+.transaction_table th,
+.transaction_table td {
+  padding: 10px 12px;
+}
+
+.transaction_table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.transaction_table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.transaction_table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.transaction_table tbody tr:hover {
+  background-color: #428444;
+}
+
+.transaction_table button {
+  background-color: #009879;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.transaction_table button:hover {
+  background-color: #007961;
+}
+
+
+.transaction_table .updateTab {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+}
+
+.transaction_table .updateTab input[type='number'] {
+  width: 60%;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+}
+
+.transaction_table p {
+  color: black;
+  margin-top: 10px;
+}
+
+.updateTab {
+  position: fixed; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  z-index: 1000; 
+  background-color: rgba(0, 0, 0, 0.4); 
+  padding: 20px;
+  border-radius: 5px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  width: 50%; 
+  max-width: 300px; 
+  box-sizing: border-box; 
+}
+
+.update_tab_input {
+  background-color: white;
+  width: 100%; 
+  padding: 8px; 
+  margin: 0; 
+  box-sizing: border-box; 
+  border: none;
+  color: white;
+}
+
+.x_button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.t_update_message {
+  color: white;
+}
+
+
