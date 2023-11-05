@@ -7,7 +7,8 @@ const NavBar = () => {
     return(
         <nav>
             <ul className="navbar">
-                <h1 className='navbar_title'>Budge-It<FontAwesomeIcon icon={faHandHoldingDollar}/></h1>
+                <Link to='/piecharts'><h1 className='navbar_title'>Budge-It<FontAwesomeIcon icon={faHandHoldingDollar}/></h1></Link>
+                <li><Link to='/piecharts'>Dashboard</Link></li>
                 <li><Link to='/addincome'>Add Income</Link></li>
                 <li><Link to='comparesavings'>Compare Savings</Link></li>
                 <li><Link to='/update'>Update Budgets</Link></li>

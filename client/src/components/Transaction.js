@@ -3,8 +3,8 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { updateCurrentUser } from "../actions/useractions"
-import { Link } from 'react-router-dom'
 import { formatDate } from "../helpers/dateFormat";
+import NavBar from "./NavBar";
 
 
 
@@ -13,6 +13,7 @@ const Transaction = ( { currentUser }) => {
     const [editingTransactionId, setEditingTrnasactionId] = useState(null)
     const [tranAmounts, setTranAmounts] = useState({})
     const [message, setMessage] = useState({})
+    const [postMessage, setPostMessage] = useState('')
     const dispatch = useDispatch()
    
 
@@ -116,7 +117,7 @@ const Transaction = ( { currentUser }) => {
         },
         validationSchema: TransactionSchema,
         onSubmit: (values, { resetForm }) => {
-
+            
             const newTransaction = {
                 amount: values.amount,
                 description: values.description,
@@ -138,7 +139,7 @@ const Transaction = ( { currentUser }) => {
             .then(data => {
                 if(data) {
                     resetForm();
-
+                    showMessage('Transaction added!')
                     const updatedTransaction = [...currentUser.transactions, data]
                     const updatedUser = {...currentUser, transactions: updatedTransaction}
                     dispatch(updateCurrentUser(updatedUser))
@@ -146,6 +147,7 @@ const Transaction = ( { currentUser }) => {
             })
             .catch(e => {
                 console.error(e)
+                
             })
 
         }
@@ -161,29 +163,39 @@ const Transaction = ( { currentUser }) => {
         setEditingTrnasactionId((prev) => (prev === transactionId ? null : transactionId));
     }
 
+    const showMessage = (message) => {
+        setPostMessage(message);
+        setTimeout(() => {
+            setPostMessage('');
+        }, 2000)
+    }
     
     
-    return (<div className="transactions_background"><Link to='/piecharts'>Dashboard</Link><div><h2>Total Transactions: ${totalTransactions(currentUser).toFixed(2)}</h2></div>
-    <h1>Please enter new transactions here</h1>
-    <form onSubmit={formik.handleSubmit}>
+    return (<div className="transactions_background"><NavBar></NavBar><div className='scoreboard3'><h2 className='income_score'>Total Transactions: ${totalTransactions(currentUser).toFixed(2)}</h2></div>
+    <div className="new_t_form_container">
+    <form className="new_t_form" onSubmit={formik.handleSubmit}>
+        <div className="input_t_group">
         <input
+        className="new_t_form_input"
         type='number'
         name='amount'
         value={formik.values.amount}
         onChange={formik.handleChange}
         placeholder='Transaction Amount'
         />
-        <p>{formik.errors.amount}</p>
+        <p className='new_t_message'>{formik.errors.amount}</p>
         <input
+        className="new_t_form_input"
         type='text'
         name='description'
         value={formik.values.description}
         onChange={formik.handleChange}
         placeholder='Description'
         />
-        <p>{formik.errors.description}</p>
+         <p className='new_t_message'>{formik.errors.description}</p>
 
         <select
+        className="new_t_form_input"
         name='category_id'
         value={formik.values.category_id}
         onChange={formik.handleChange}
@@ -195,12 +207,15 @@ const Transaction = ( { currentUser }) => {
                  >{category.name}</option>
             ))}
             
-        </select><p>{formik.errors.category_id}</p>
-        <button type='Submit'>Add transaction</button>
+        </select>
+         <p className='new_t_message'>{formik.errors.category_id}</p>
+        
+        <button className="new_t_form_button" type='Submit'>Add transaction</button>
+        <p className='new_t_message'>{postMessage}</p></div>
     </form>
+    </div>
     
-    
-    
+    <div className="transaction_table_container">
     <table className='transaction_table'><thead>
         <tr>
             <th>Date</th>
@@ -228,8 +243,8 @@ const Transaction = ( { currentUser }) => {
                                 defaultValue={transaction.amount}
                                 onChange={(event) => handleInputChange(transaction.id, event)}
                                 />
-                                <button onClick={() => handleUpdateClick(transaction.id)}>Update Transaction</button>
-                                <p className='t_update_message'>{message[transaction.id]}</p>
+                                <button className='update_t_button' onClick={() => handleUpdateClick(transaction.id)}>Update Transaction</button>
+                                <p className='update_t_message' style={{ color: 'white' }}>{message[transaction.id]}</p>
                             </div>
                         )}
                         <button onClick={() => handleDelete(transaction.id)}>Delete</button>
@@ -240,7 +255,7 @@ const Transaction = ( { currentUser }) => {
         </tbody>
         
         
-        </table></div>)
+        </table></div></div>)
 }
 
 
