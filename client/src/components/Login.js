@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import Signup from "./Signup";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { Button } from "@chakra-ui/react";
 
 const Login = () => {
     const [isError, setIsError] = useState(false);
@@ -85,7 +86,7 @@ const Login = () => {
                 />
                 <p className="begin_formik_errors_login_password">{formik.errors.password}</p>
                 </div>
-                <button className='beginning_form_button' type='submit'>Login</button><button className='beginning_form_button' onClick={() => setNewUser(true)}>New User?</button>
+                <Button variant='solid' className='beginning_form_button' type='submit'>Login</Button><Button variant='solid' className='beginning_form_button' onClick={() => setNewUser(true)}>New User?</Button>
             </form>
             {isError && <p className='begin_form_error'>Username or password not found.</p>}
             

@@ -4,9 +4,10 @@ import NavBar from "./NavBar";
 import { useHistory } from 'react-router-dom'
 import { formatDate } from "../helpers/dateFormat";
 import SoloPieChart from "./SoloPieChart";
+import { Button } from '@chakra-ui/react'
 
 const PieCharts = ( { currentUser }) => {
-    const COLORS = ['#0088FE', '#00c49F', '#FFBB28', '#FF8042'];
+    const COLORS = ['#50bb7f', '#FF4C29', '#FBF8BE', '#FF8042'];
     
     
     
@@ -23,10 +24,7 @@ const PieCharts = ( { currentUser }) => {
 
     const healthScore = `${((profit/totalIncome) * 100).toFixed(2)}%`
 
-    const handleCompareRouteClick = () => {
-        history.push('/comparesavings')
-    }
-    
+ 
 
     const handleMoreInfoClick = (categoryName) => {
         history.push(`/category/${categoryName}`)
@@ -54,24 +52,36 @@ const PieCharts = ( { currentUser }) => {
         ]
     }
     
+    
 
 
     return (<>
-        <NavBar currentUser={currentUser} />
-        <h1>Welcome {currentUser.username}!</h1>
-        <h2>Budget Range: {formatDate(currentUser.budgets[0].start_date)} to {formatDate(currentUser.budgets[0].end_date)}</h2>
-        <h2>Savings Rate: {healthScore}</h2><button onClick={() => handleCompareRouteClick()}>Compare Savings</button>
-        <h2>Savings: ${profit}</h2>
+        <NavBar currentUser={currentUser} /><div className="pie_charts_background">
+            <div className="pie_charts_container">
+        <h1 className='welcome'>Welcome {currentUser.username}!</h1>
+        <h2 className='date_expiration'>Budget Range: {formatDate(currentUser.budgets[0].start_date)} to expiration on {formatDate(currentUser.budgets[0].end_date)}</h2>
+        <div className='scoreboard2'>
+        <h2 className='income_score'>Savings Rate: {healthScore}</h2>
+        <h2 className="budgets_score">Savings: ${profit}</h2>
+        <h2 className='income_score'>Total Income: ${totalIncome.toFixed(2)}</h2>
+        {currentUser.transactions.length !== 0 ?
+        <h2 className="income_score">Total Transactions: ${totalTransactions(currentUser).toFixed(2)}</h2> : <h2 className="income_score">No transactions</h2>}
+        
+        </div>
+        <div className="pie_charts_grid">
         {currentUser.budgets.map((budget, index) => {
           const pieChartData = dataForCategoryWithTransactions(budget, currentUser.transactions);
           return (
-            <div key={budget.id}>
-              <h2>{budget.category} Budget</h2>
+            <div key={budget.id} className='pie_chart_item'>
+              <h2 className='piechart_category_name'>{budget.category} Budget</h2>
               <SoloPieChart pieChartData={pieChartData} COLORS={COLORS} />
-              <button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
+              <Button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</Button>
             </div>
           );
         })}
+        </div>
+        </div>
+        </div>
       </>
     );
                     

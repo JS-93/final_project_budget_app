@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { updateCurrentUser } from "../actions/useractions";
-
+import { Button, Input } from '@chakra-ui/react'
 
 const CatBudgetInput = ( { category, currentUser } ) => {
     const [message, setMessage] = useState('')
@@ -63,21 +63,21 @@ const CatBudgetInput = ( { category, currentUser } ) => {
 
    
 
-    return ( <div>
+    return ( <div className='budget_input_container'>
         <label>{category.name}</label>
         <form onSubmit={formik.handleSubmit}>
-            <input
+          <div className="button_budget_container">
+            <Input
                 type='number'
                 name='amount'
                 value={formik.values.amount}
                 onChange={formik.handleChange}
                 placeholder='Amount for budget'
             />
-            <p style={{ color: 'black' }}>{formik.errors.amount}</p>
-            <p>{message}</p>
-            <div style={{ display: 'flex' }}>
-                { showAddButton && <button type='submit'>Add Budget</button> }
-            </div>
+                { showAddButton && <Button type='submit'>Add Budget</Button> }
+                </div>
+            <p className='budget_error_message' >{formik.errors.amount}</p>
+            <p className='budget_error_message'>{message}</p>
         </form>
     </div>)
 }

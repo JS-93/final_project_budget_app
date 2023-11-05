@@ -5,15 +5,19 @@ import CatBudgets from "./CatBudgets";
 import { useDispatch } from 'react-redux'
 import { updateCurrentUser } from "../actions/useractions";
 import { Link } from 'react-router-dom'
+import { Button, Input, Text } from '@chakra-ui/react';
+  
 
 
 const Budgets = ( { currentUser } ) => {
     const [message, setMessage] = useState('')
+    const [ok, setOk] = useState(false)
     const dispatch = useDispatch()
 
 
     const IncomeSchema = Yup.object().shape({
         amount: Yup.number()
+        .typeError('Amount must be a valid number.')
         .required('Income amount is required.')
         .min(0.01, 'Income amount must be greater than 0.'),
         description: Yup.string()
@@ -63,31 +67,38 @@ const Budgets = ( { currentUser } ) => {
 
 
     return (
-        <div>
-          <Link to='/logout'>Logout</Link>
+        <div className='budgets_background'>
+            
+          <Link className='logout_link_budget' to='/logout'>Logout</Link>
           { !hasIncome ? (
-            <>
-              <h1>Please enter your income here</h1>
-              <form onSubmit={formik.handleSubmit}>
-                <input
+            <><div className='form_budget_background'>
+              { !ok ? <div className='budget_info'><Text fontWeight='extrabold'>This is the budget page: start by adding your monthly income! You'll be able to add more income on the main page.</Text>
+              <Button onClick={() => setOk(true)}>Sounds good!</Button>
+              </div> : ''}
+              <form className="form_income_budget" onSubmit={formik.handleSubmit}>
+              <Text fontWeight='extrabold' className='form_income_budget_title'>Please enter your income here</Text>
+                <Input
+                  variant='filled'
                   type='text'
                   name='amount'
                   value={formik.values.amount}
                   onChange={formik.handleChange}
                   placeholder='Monthly Income Here'
                 />
-                {formik.errors.amount && <p style={{ color: 'red' }}>{formik.errors.amount}</p>}
-                <input
+                {formik.errors.amount && <p className='income_budget_error'>{formik.errors.amount}</p>}
+                
+                <Input
+                  variant='filled'
                   type='text'
                   name='description'
                   value={formik.values.description}
                   onChange={formik.handleChange}
                   placeholder="Income Source Here"
                 />
-                {formik.errors.description && <p style={{ color: 'red' }}>{formik.errors.description}</p>}
-                <button type='Submit'>Add Income</button>
+                {formik.errors.description && <p className='income_description_error'>{formik.errors.description}</p>}
+                <Button className='budget_income_button' type='Submit'>Add Income</Button>
                 {message && <p>{message}</p>}
-              </form>
+              </form></div>
             </>) : 
            
             <CatBudgets currentUser={currentUser} />}

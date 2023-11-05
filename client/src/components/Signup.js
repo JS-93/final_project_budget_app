@@ -4,6 +4,8 @@ import * as Yup from 'yup'
 import Login from './Login'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import confetti from 'canvas-confetti'
+import { Button } from "@chakra-ui/react";
 
 const Signup = () => {
     const [message, setMessage] = useState('')
@@ -46,10 +48,16 @@ const Signup = () => {
                 } else {
                     setMessage('Signed up successfully!')
                     resetForm();
+                    confetti({
+                        angle: 90,
+                        spread: 45,
+                        origin: { x: 0.5, y: 0.5 }
+                      });
                 }
             })
             .catch(error => {
                 console.error('Error:', error)
+                
             })
             
             
@@ -66,7 +74,7 @@ const Signup = () => {
         <div className='beginning_form_input_group'>
         <FontAwesomeIcon icon={faEnvelope} className='fa_user'/>
             <input
-            className='username_input'
+            className='username_input_signup'
             type='text'
             name='email'
             value={formik.values.email}
@@ -78,7 +86,7 @@ const Signup = () => {
             <div className='beginning_form_input_group'>
             <FontAwesomeIcon icon={faUser} className='fa_user'/>
             <input
-            className='username_input'
+            className='username_input_signup'
             type='text'
             name='username'
             value={formik.values.username}
@@ -89,7 +97,7 @@ const Signup = () => {
             <div className='beginning_form_input_group'>
             <FontAwesomeIcon icon={faLock} className='fa_password'/>
             <input
-            className='username_input'
+            className='username_input_signup'
             type='password'
             name='password'
             value={formik.values.password}
@@ -98,7 +106,7 @@ const Signup = () => {
             />
             <p className='begin_formik_errors_password'>{formik.errors.password}</p>
             </div>
-            <button className='beginning_form_button' type='submit'>Sign up</button><button className='beginning_form_button' onClick={() => setShowLogin(true)}>Back to login</button>
+            <Button className='beginning_form_button' type='submit'>Sign up</Button><Button className='beginning_form_button' onClick={() => setShowLogin(true)}>Back to login</Button>
         </form>
         <p className='begin_form_message'>{message}</p>
     </div>

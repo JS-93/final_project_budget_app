@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import CatBudgetInput from "./CatBudgetInput";
 import { useHistory } from 'react-router-dom'
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
+import { Button } from '@chakra-ui/react'
 
 const CatBudgets = ( { currentUser } ) => {
     const [categories, setCategories] = useState([])
     const history = useHistory()
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A28DFF', '#FF99C8', '#FF6666'];
+    const COLORS = ['#234E70', 'green', '#4B8FBF', '#534E70', 'black', '#404040', ' #DF7F50', 'blue'];
     
 
     const pieData = () => {
@@ -70,13 +71,13 @@ const CatBudgets = ( { currentUser } ) => {
 
       return (
         <><div style={{ position: 'absolute', top: 1, right: 2}}>
-          <PieChart width={800} height={400}>
+          <PieChart width={1200} height={940}>
       <Pie
         isAnimationActive={true}
         data={pieData()}
         cx="50%"
         cy="50%"
-        outerRadius={150}
+        outerRadius={310}
         fill="#8884d8"
         dataKey="value"
         label={(entry) => {
@@ -94,9 +95,10 @@ const CatBudgets = ( { currentUser } ) => {
       <Legend />
     </PieChart>
         </div>
-          <h1>Total Income: ${totalIncome(currentUser)}</h1>
-          <h1>Total Budgets: ${totalBudgetAmount(currentUser)}</h1>
-          <div>
+        <div className='scoreboard'>
+          <h1 className='income_score'>Total Income: ${totalIncome(currentUser)}</h1>
+          <h1 className='budgets_score'>Total Budgets: ${totalBudgetAmount(currentUser)}</h1></div>
+          <div className='budget_container'>
             {remainingCategories.map((category, index) => {
              
               
@@ -110,7 +112,7 @@ const CatBudgets = ( { currentUser } ) => {
               );
             })}
             {allBudgetSet && (
-              <button onClick={handleGoToHomepage}>Go To Dashboard</button>
+              <Button className='dashboard_button' onClick={handleGoToHomepage}>Go To Dashboard</Button>
             )}
           </div>
         </>
