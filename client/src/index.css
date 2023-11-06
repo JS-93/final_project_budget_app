@@ -390,6 +390,18 @@ width: 100%;
   width: 100%;
 }
 
+.dynamic_route_button {
+  background-color: rgb(100, 170, 196);
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.dynamic_route_button:hover {
+  background-color: rgb(144, 209, 233);
+}
+
 .welcome {
   font-weight: bold;
   padding: 30px;
@@ -432,7 +444,7 @@ width: 100%;
 
 .transactions_background {
   background: linear-gradient(90deg, #234E70, #FBF8BE);
-  height: 150vh;
+  height: 130vh;
   overflow-y: hidden;
 }
 
@@ -497,7 +509,7 @@ width: 100%;
 }
 
 .transaction_table tbody tr:hover {
-  background-color: #428444;
+  background-color: rgb(100, 139, 159);
 }
 
 .transaction_table button {
@@ -647,10 +659,146 @@ width: 100%;
   font-size: 13px;
   
 }
-
-
 /* end transactions css */
 
+/* beginning dynamic route css */
 
+.chart_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+
+}
+
+.dynamic_route_background{
+  height: 110vh;
+  background: #e5faff;
+  z-index: -1;
+}
+
+.dynamic_graph_title {
+  display: flex;
+  z-index: 1;
+  margin: 0 auto;
+  font-size: 20px;
+  padding: 30px;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.cat_t_table {
+  width: 90%;
+  border-collapse: collapse;
+  background-color: rgb(177, 176, 176);
+  margin: 50px auto;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.cat_t_table thead tr {
+  background-color: gray;
+  color: #ffffff;
+  text-align: left;
+}
+
+.cat_t_table th,
+.cat_t_table td {
+  padding: 10px 12px;
+}
+
+.cat_t_table tbody tr {
+  font-weight: bold;
+}
+
+.cat_t_table tbody tr:nth-of-type(even) {
+  background-color: white;
+}
+
+.cat_t_table tbody tr:hover {
+  background-color: rgb(100, 139, 159);
+}
+
+.sorting_buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.sort_button {
+  border: 1px solid black;
+  background-color: rgb(40, 96, 116);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  width: 200px;
+  margin: 30px;
+  padding: 10px;
+  border: none;
+}
+
+.sort_button:hover {
+  background-color: rgb(86, 155, 180);
+}
+
+/* end dynamic route css */
+
+/* beginning income route css */
+
+.income_background {
+  height: 120vh;
+  background: #e5faff;
+  
+}
+
+.income_form_container {
+  display: flex;
+  justify-content: center;
+  padding: 25px;
+}
+
+.bar_chart_container {
+  display: flex;
+  justify-content: center;
+}
+
+.income_table_container {
+  display: flex;
+  justify-content: center;
+}
+
+.input_income_container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.income_input {
+  margin: 25px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.income_button {
+  background-color: rgb(40, 96, 116);
+  padding: 20px;
+  margin: 20px;
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.income_button:hover {
+  background-color: rgb(71, 154, 184);
+}
+
+.income_new_errors {
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.income_chart_title {
+  
+}
 
 

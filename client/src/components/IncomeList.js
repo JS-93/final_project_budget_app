@@ -5,7 +5,7 @@ import { formatDate } from "../helpers/dateFormat";
 const IncomeList = ( { currentUser } ) => {
 
 
-    return (<div>
+    return (<div className='income_table_container'>
         <table>
             <thead>
                 <tr>

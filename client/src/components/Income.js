@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom'
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Cell, Tooltip } from 'recharts'
 import IncomeList from "./IncomeList";
 import { useDispatch } from "react-redux";
 import { updateCurrentUser } from "../actions/useractions";
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import NavBar from "./NavBar";
 
 const AddIncome = ( { currentUser } ) => {
     const [message, setMessage] = useState('')
@@ -96,28 +96,11 @@ const AddIncome = ( { currentUser } ) => {
     
     return (<>
     
-        <Link to='/piecharts'>Dashboard</Link>
-        <form onSubmit={formik.handleSubmit}>
-                <input
-                  type='text'
-                  name='amount'
-                  value={formik.values.amount}
-                  onChange={formik.handleChange}
-                  placeholder='Monthly Income Here'
-                />
-                {formik.errors.amount && <p style={{ color: 'black' }}>{formik.errors.amount}</p>}
-                <input
-                  type='text'
-                  name='description'
-                  value={formik.values.description}
-                  onChange={formik.handleChange}
-                  placeholder="Income Source Here"
-                />
-                {formik.errors.description && <p style={{ color: 'black' }}>{formik.errors.description}</p>}
-                <button type='Submit'>Add Income</button>
-                {message && <p>{message}</p>}
-              </form>
-        <BarChart width={1200} height={600} data={data}>
+        <NavBar></NavBar>
+        <div className='income_background'>
+            <h1 className="income_chart_title">Income to Transaction Chart</h1>
+              <div className="bar_chart_container">
+        <BarChart width={1600} height={600} data={data}>
             <Bar dataKey="amount" isAnimationActive={true}>
                 {data.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -128,8 +111,35 @@ const AddIncome = ( { currentUser } ) => {
             <YAxis />
             <Tooltip cursor={{ fill: 'transparent' }}/>
         </BarChart>
+        </div>
+        <div className="income_form_container">
+        <form onSubmit={formik.handleSubmit}>
+            <div className="input_income_container">
+                <input
+                  className="income_input"
+                  type='text'
+                  name='amount'
+                  value={formik.values.amount}
+                  onChange={formik.handleChange}
+                  placeholder='Monthly Income Here'
+                />
+                {formik.errors.amount && <p className="income_new_errors">{formik.errors.amount}</p>}
+                <input
+                  className="income_input"
+                  type='text'
+                  name='description'
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  placeholder="Income Source Here"
+                />
+                {formik.errors.description && <p className="income_new_errors">{formik.errors.description}</p>}
+                <button className="income_button" type='Submit'>Add Income</button>
+                {message && <p className="income_new_errors">{message}</p>}
+                </div>
+              </form>
+              </div>
         <IncomeList currentUser={currentUser}/>
-    
+        </div>
     </>);
 }
 

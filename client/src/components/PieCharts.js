@@ -75,7 +75,7 @@ const PieCharts = ( { currentUser }) => {
             <div key={budget.id} className='pie_chart_item'>
               <h2 className='piechart_category_name'>{budget.category} Budget</h2>
               <SoloPieChart pieChartData={pieChartData} COLORS={COLORS} />
-              <button onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
+              <button className='dynamic_route_button' onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
             </div>
           );
         })}
