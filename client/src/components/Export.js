@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
+import { formatDate } from "../helpers/dateFormat";
 
 
 const Export = ( { currentUser }) => {
@@ -9,8 +10,11 @@ const Export = ( { currentUser }) => {
     const handleCompareRouteClick = () => {
         history.push('/finance')
     }
-
-    return <><Link to='/logout'>Logout</Link><h1>Hello from export</h1><button onClick={() => handleCompareRouteClick()}>Financial Summary</button></>
+    console.log(currentUser.budgets[0].start_date)
+    return <><div className="export_background"><Link to='/logout'>Logout</Link><div className="export_description">
+    <h1>Hey {currentUser.username}! Thanks for using Budge-It to help track your spending from {formatDate(currentUser.budgets[0].start_date)} to {formatDate(currentUser.budgets[0].end_date)}! Make sure to go to your financial summary to review your budgets and transactions of this timeframe!
+    
+    </h1></div><button onClick={() => handleCompareRouteClick()}>Financial Summary</button></div></>
 }
 
 

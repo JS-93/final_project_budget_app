@@ -7,7 +7,7 @@ import SoloPieChart from "./SoloPieChart";
 
 
 const PieCharts = ( { currentUser }) => {
-    const COLORS = ['#50bb7f', '#FF4C29', '#FBF8BE', '#FF8042'];
+    const COLORS = ['#97c070', '#ba6c63', '#64aac4', '#FF8042'];
     
     
     

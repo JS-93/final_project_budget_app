@@ -6,7 +6,7 @@ const IncomeList = ( { currentUser } ) => {
 
 
     return (<div className='income_table_container'>
-        <table>
+        <table className='new_income_table'>
             <thead>
                 <tr>
                     <th>Date</th>
@@ -19,7 +19,7 @@ const IncomeList = ( { currentUser } ) => {
                     <tr key={i.id}>
                         <td>{formatDate(i.date)}</td>
                         <td>{i.description}</td>
-                        <td>{i.amount}</td>
+                        <td>${(i.amount).toFixed(2)}</td>
                     </tr>
                 ))}
             </tbody>

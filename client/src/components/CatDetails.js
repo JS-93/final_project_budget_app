@@ -94,7 +94,7 @@ const CategoryDetails = ({ currentUser }) => {
       
     
     return transactions.length > 0 ? 
-    ( <><NavBar></NavBar><div className='dynamic_route_background'><h2 className='dynamic_graph_title'>Budget-Transaction Comparison Graph</h2>
+    ( <><NavBar></NavBar><div className='dynamic_route_background'><h2 className='dynamic_graph_title'>Budget-Transaction Comparison Graph for {categoryName}</h2>
     <div className='chart_container'>
       
     <AreaChart width={1530} height={450} data={chartData}

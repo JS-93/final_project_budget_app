@@ -11,34 +11,38 @@ const AddIncome = ( { currentUser } ) => {
     const [message, setMessage] = useState('')
     const dispatch = useDispatch()
 
-    const incomeColor = 'green';
-    const transactionColor = 'blue';
-    const totalTransactionsColor = 'red';
+    const incomeColor = '#97c070';
+    const transactionColor = '#234E70';
+    const totalTransactionsColor = '#ba6c63';
 
     const totalIncome = (currentUser) => {
         return currentUser.income.reduce((total, currentIncome) => {
-            return total + currentIncome.amount;
+            return (parseFloat(total) + parseFloat(currentIncome.amount)).toFixed(2);
         }, 0);
       }
 
     const totalTransactions = (currentUser) => {
         return currentUser.transactions.reduce((total, currentTransaction) => {
-            return total + currentTransaction.amount;
+            return (parseFloat(total) + parseFloat(currentTransaction.amount)).toFixed(2);
         }, 0)
     }
 
     const totalsByCategory = currentUser.transactions.reduce((acc, transaction) => {
         if (acc[transaction.category]) {
-            acc[transaction.category] += transaction.amount;
+            acc[transaction.category] += (parseFloat(transaction.amount));
         } else {
-            acc[transaction.category] = transaction.amount;
+            acc[transaction.category] = parseFloat(transaction.amount);
         }
         return acc;
     }, {})
 
+    for (let category in totalsByCategory) {
+        totalsByCategory[category] = totalsByCategory[category].toFixed(2);
+    }
+
     const categoryData = Object.entries(totalsByCategory).map(([category, amount]) => ({
         name: category,
-        amount
+        amount: parseFloat(totalsByCategory[category])
     }))
      
       const data = [
@@ -115,6 +119,7 @@ const AddIncome = ( { currentUser } ) => {
         <div className="income_form_container">
         <form onSubmit={formik.handleSubmit}>
             <div className="input_income_container">
+                <div className="income_amount_container">
                 <input
                   className="income_input"
                   type='text'
@@ -123,7 +128,8 @@ const AddIncome = ( { currentUser } ) => {
                   onChange={formik.handleChange}
                   placeholder='Monthly Income Here'
                 />
-                {formik.errors.amount && <p className="income_new_errors">{formik.errors.amount}</p>}
+                {formik.errors.amount && <p className="income_new_errors">{formik.errors.amount}</p>}</div>
+                <div className='input_description_container'>
                 <input
                   className="income_input"
                   type='text'
@@ -132,9 +138,10 @@ const AddIncome = ( { currentUser } ) => {
                   onChange={formik.handleChange}
                   placeholder="Income Source Here"
                 />
-                {formik.errors.description && <p className="income_new_errors">{formik.errors.description}</p>}
+                {formik.errors.description && <p className="income_new_errors">{formik.errors.description}</p>}</div>
+                <div>
                 <button className="income_button" type='Submit'>Add Income</button>
-                {message && <p className="income_new_errors">{message}</p>}
+                {message && <p className='income_new_errors'>{message}</p>}</div>
                 </div>
               </form>
               </div>

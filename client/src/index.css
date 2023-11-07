@@ -326,7 +326,7 @@ width: 100%;
   list-style: none;
   background: linear-gradient(90deg, #234E70, #FBF8BE);
   height: 85px;
-  border-bottom: 1px solid black;
+  
 }
 
 .navbar li {
@@ -727,7 +727,7 @@ width: 100%;
 
 .sort_button {
   border: 1px solid black;
-  background-color: rgb(40, 96, 116);
+  background-color: rgb(35, 78, 112);
   font-weight: bold;
   color: white;
   border-radius: 10px;
@@ -747,7 +747,7 @@ width: 100%;
 
 .income_background {
   height: 120vh;
-  background: #e5faff;
+  background: linear-gradient(90deg, #b9e0e9, white);
   
 }
 
@@ -769,23 +769,27 @@ width: 100%;
 
 .input_income_container {
   display: flex;
-  flex-direction: column;
-  width: 300px;
+  justify-content: center;
+  width: 1500px;
 }
 
 .income_input {
   margin: 25px;
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
+  width: 400px;
+  height: 45px;
 }
 
 .income_button {
   background-color: rgb(40, 96, 116);
-  padding: 20px;
+  padding: 0px;
   margin: 20px;
+  height: 45px;
   color: white;
   border-radius: 10px;
   font-weight: bold;
+  width: 300px;
 }
 
 .income_button:hover {
@@ -798,7 +802,362 @@ width: 100%;
 }
 
 .income_chart_title {
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  padding: 25px;
+  font-size: 20px;
+
+}
+
+.income_new_errors {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.income_table_container {
+  margin: 0 auto;
+  width: 70%;
+}
+
+.new_income_table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgb(177, 176, 176);
+  margin: 0 auto;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.new_income_table thead tr {
+  background-color: gray;
+  color: #ffffff;
+  text-align: left;
+
+}
+
+.new_income_table th,
+.new_income_table td {
+  padding: 10px 12px;
+
+  font-weight: bold;
+}
+
+.new_income_table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+
+.new_income_table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
   
 }
 
 
+.new_income_table tbody tr:hover {
+  background-color: rgb(100, 139, 159);
+}
+
+/* end of income css */
+
+/* beginning of compare css */
+
+.compare_background {
+  height: 100vh;
+  background: linear-gradient(90deg, #b9e0e9, white);
+}
+
+.compare_chart_title {
+  font-weight: bold;
+  font-size: 20px;
+
+}
+
+.compare_title_container{
+  display: flex;
+  justify-content: center;
+  padding: 35px;
+}
+
+.compare_chart_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.compare_info_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-weight: bold;
+}
+
+/* end of compare css */
+
+/* beginning of update css */
+
+.update_background {
+  height: 100vh;
+  background: linear-gradient(90deg, #b9e0e9, white);
+  padding-top: 40px;
+ 
+}
+
+.scoreboard4 {
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.2); 
+}
+
+.first_half {
+  width: 50%;
+}
+
+.update_b_form_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.update_b_input_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.update_b_input_container label {
+  position: absolute;
+  margin-top: -80px;
+  font-weight: bold;
+
+  
+}
+
+.update_b_input_container input {
+  border-radius: 10px;
+  width: 270px;
+  padding: 10px;
+}
+
+
+.update_b_input_container button {
+  background-color: rgb(40, 96, 116);
+  margin: 20px;
+  height: 45px;
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  width: 270px;
+}
+
+.update_b_input_container button:hover {
+  background-color: rgb(71, 154, 184);
+}
+
+.update_b_input_container p {
+  position: absolute;
+  margin-top: 85px;
+  font-weight: bold;
+}
+
+.second_half {
+  
+    position: absolute;
+    right: 0; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50%; 
+    margin-top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+  
+}
+/* end of update css */
+
+/* beginning of export css page */
+
+.export_background {
+  height: 100vh;
+  background: linear-gradient(90deg, #234E70, #FBF8BE);
+}
+
+.export_background a {
+  font-size: 28px;
+  margin: 5px;
+  color: white;
+}
+
+.export_background a:hover {
+  font-size: 30px;
+}
+
+.export_description {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2); 
+  width: 1200px;
+  padding: 50px;
+  text-align: center;
+  margin: 60px auto;
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.export_background button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-color: rgb(40, 96, 116);
+  height: 45px;
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  width: 270px;
+}
+
+.export_background button:hover {
+  background-color: rgb(71, 154, 184);
+}
+
+/* end of export css */
+
+/* beginning of financial summary css */
+
+.finance_title {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  font-size: 40px;
+  font-family: sans-serif;
+
+}
+
+.fa_icon {
+  color: rgb(92, 150, 92);
+}
+
+.financial_title {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+.scoreboard5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  margin: 0 auto;
+  border-bottom: 1px solid black;
+}
+
+.scoreboard5 h2 {
+  padding: 3px;
+  font-weight: bold;
+}
+
+.total_in_f {
+  color: rgb(50, 103, 50);
+}
+
+.total_t_f {
+  color: rgb(165, 34, 34);
+}
+
+.budget_sum_title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px;
+
+}
+
+.budget_cat_table {
+  width: 100%;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  
+}
+
+.t_header {
+  text-align: left;
+}
+
+.f_t_table {
+  width: 100%;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  border: 1px solid black;
+  margin-top: 15px;
+}
+
+.f_t_table thead tr {
+  text-align: left;
+  border-bottom: 1px solid black;
+}
+
+.f_sum_button {
+  padding: 20px;
+  margin: 0 auto;
+  background-color: rgb(40, 96, 116);
+  width: 300px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  margin: 25px;
+}
+
+.f_sum_button:hover {
+  background-color: rgb(71, 154, 184);
+}
+
+.confirm_background {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(90deg, #234E70, #FBF8BE);
+}
+
+.confirm_container {
+  display: grid;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2); 
+  width: 1200px;
+  padding: 50px;
+  text-align: center;
+  margin: 100px auto;
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.confirm_button {
+  padding: 20px;
+  margin: 35px auto;
+  background-color: rgb(40, 96, 116);
+  width: 300px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+}
+
+.confirm_button:hover {
+  background-color: rgb(71, 154, 184);
+}
