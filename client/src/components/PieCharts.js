@@ -7,7 +7,7 @@ import SoloPieChart from "./SoloPieChart";
 
 
 const PieCharts = ( { currentUser }) => {
-    const COLORS = ['#97c070', '#ba6c63', '#64aac4', '#FF8042'];
+    const COLORS = ['#59e159', '#ba6c63', '#64aac4'];
     
     
     
@@ -51,6 +51,24 @@ const PieCharts = ( { currentUser }) => {
             {name: 'Remaining amount for Budget', value: budget.amount - transactionAmount}
         ]
     }
+
+    const renderBudgetMessage = (budget, transactions) => {
+        const transactionAmount = transactions
+        .filter(transaction => transaction.category === budget.category)
+        .reduce((sum, transaction) => sum + transaction.amount, 0);
+        const remainingAmount = budget.amount - transactionAmount;
+        const atOrOverBudget = remainingAmount <= 0;
+        const closeToBudget = remainingAmount > 0 && remainingAmount <= budget.amount *0.05
+        const withinBudget = remainingAmount > budget.amount * 0.05;
+
+        if (atOrOverBudget) {
+            return <p className='warning_exceed'>Warning! You're at or have exceeded your budget for {budget.category}.</p>
+        } else if (closeToBudget) {
+            return <p className='warning_close'>You are close to reaching your budget limit for {budget.category}.</p>
+        } else if (withinBudget) {
+            return <p className='good_job'>Your transactions for this budget are looking healthy!</p>
+        }
+    };
     
     
 
@@ -74,6 +92,7 @@ const PieCharts = ( { currentUser }) => {
           return (
             <div key={budget.id} className='pie_chart_item'>
               <h2 className='piechart_category_name'>{budget.category} Budget</h2>
+              <div>{renderBudgetMessage(budget, currentUser.transactions)}</div>
               <SoloPieChart pieChartData={pieChartData} COLORS={COLORS} />
               <button className='dynamic_route_button' onClick={() => handleMoreInfoClick(budget.category)}>Get More Info</button>
             </div>

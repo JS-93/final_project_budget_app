@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { formatDate } from '../helpers/dateFormat';
 import { AreaChart, XAxis, YAxis, Tooltip, Area } from 'recharts';
 import NavBar from './NavBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFrown } from '@fortawesome/free-solid-svg-icons';
 
 const CategoryDetails = ({ currentUser }) => {
   const [sortKey, setSortKey] = useState('date');
@@ -141,7 +143,7 @@ const CategoryDetails = ({ currentUser }) => {
     </tbody>
         
         
-        </table></div></> ): (<><NavBar></NavBar><h1>No transactions for {categoryName}</h1></>)
+        </table></div></> ): (<><NavBar></NavBar><div className='no_tran_background'><h1>No transactions for {categoryName} <FontAwesomeIcon className='frown' icon={faFrown}/></h1><h1>Head to "See Transactions" to begin adding transactions.</h1></div></>)
 }
 
 export default CategoryDetails

@@ -1161,3 +1161,47 @@ width: 100%;
 .confirm_button:hover {
   background-color: rgb(71, 154, 184);
 }
+
+/* end of financial sum css */
+
+/* beginning of no transactions to show css */
+
+.no_tran_background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(90deg, #b9e0e9, white);
+
+}
+
+.no_tran_background h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.frown {
+  color:#009879;
+  padding: 20px;
+}
+
+.warning_exceed {
+  color: rgb(240, 48, 48);
+  font-weight: bold;
+  padding: 20px;
+}
+
+.good_job {
+  color: #59e159;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.warning_close {
+  color: yellow;
+  font-weight: bold;
+  padding: 20px;
+}
