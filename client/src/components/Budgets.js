@@ -77,7 +77,7 @@ const Budgets = ( { currentUser } ) => {
               </div> : ''}
               <form className="form_income_budget" onSubmit={formik.handleSubmit}>
               <Text fontWeight='extrabold' className='form_income_budget_title'>Please enter your income here</Text>
-                <Input
+                <input
                   variant='filled'
                   type='text'
                   name='amount'
@@ -87,7 +87,7 @@ const Budgets = ( { currentUser } ) => {
                 />
                 {formik.errors.amount && <p className='income_budget_error'>{formik.errors.amount}</p>}
                 
-                <Input
+                <input
                   variant='filled'
                   type='text'
                   name='description'

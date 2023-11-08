@@ -83,7 +83,7 @@ const Compare = ( { currentUser }) => {
                     stroke='#8884d8'
                     dot={(props) => {
                         if (props.payload.userId === currentUser.id) {
-                          return <circle cx={props.cx} cy={props.cy} r={8} fill="white" />;
+                          return <circle cx={props.cx} cy={props.cy} r={15} fill="green" />;
                         } else {
                           return <circle cx={props.cx} cy={props.cy} r={3} fill="#8884d8" />;
                         }

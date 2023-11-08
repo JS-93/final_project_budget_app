@@ -183,15 +183,21 @@ width: 100%;
 }
 
 .form_income_budget input {
-  background-color: rgba(0, 0, 0, 0.2); 
-  color: white;
+  background-color: white(0, 0, 0, 0.2); 
+  color: black;
   font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.form_income_budget input:active {
+  background-color: white;
 }
 
 .form_income_budget_title{
   margin-top: 20px;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .logout_link_budget {
@@ -201,13 +207,13 @@ width: 100%;
 
 .income_budget_error {
   position: absolute;
-  margin-top: 140px;
+  margin-top: 145px;
   color: white;
 }
 
 .income_description_error {
   position: absolute;
-  margin-top: 225px;
+  margin-top: 230px;
   color: white;
 }
 
@@ -380,7 +386,7 @@ width: 100%;
   padding: 1rem;
   background-color: rgba(0, 0, 0, 0.6); 
   border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
   min-height: 400px;
   border: 1px solid white;
 }
@@ -427,7 +433,7 @@ width: 100%;
 }
 
 .scoreboard2 {
-  border: 1px solid white;
+  border: 5px solid white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -512,8 +518,9 @@ width: 100%;
   background-color: rgb(100, 139, 159);
 }
 
+
 .transaction_table button {
-  background-color: #009879;
+  background-color: rgb(40, 96, 116);
   color: white;
   border: none;
   padding: 8px 12px;
@@ -523,7 +530,7 @@ width: 100%;
 }
 
 .transaction_table button:hover {
-  background-color: #007961;
+  background-color: rgb(71, 154, 184);
 }
 
 
@@ -553,11 +560,11 @@ width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  left: 50%;
-  top: 50%;
+  left:77%;
+  top: 45%;
   transform: translate(-50%, -50%);
   z-index: 1000; 
-  background-color: rgba(0, 0, 0, 0.4); 
+  background-color: rgba(0, 0, 0, 0.7); 
   padding: 20px;
   border-radius: 5px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -638,10 +645,14 @@ width: 100%;
 
 .new_t_form_button {
   border: none; 
-  background-color: gray;
+  background-color: rgb(40, 96, 116);
   font-weight: bold;
-  color: black;
+  color: white;
   cursor: pointer; 
+}
+
+.new_t_form_button:hover {
+  background-color: rgb(71, 154, 184);
 }
 
 
@@ -1189,13 +1200,13 @@ width: 100%;
 }
 
 .warning_exceed {
-  color: rgb(240, 48, 48);
+  color: rgb(246, 106, 106);
   font-weight: bold;
   padding: 20px;
 }
 
 .good_job {
-  color: #59e159;
+  color: #53ce53;
   font-weight: bold;
   padding: 20px;
 }
@@ -1205,3 +1216,5 @@ width: 100%;
   font-weight: bold;
   padding: 20px;
 }
+
+

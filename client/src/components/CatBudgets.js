@@ -7,7 +7,7 @@ import { Button } from '@chakra-ui/react'
 const CatBudgets = ( { currentUser } ) => {
     const [categories, setCategories] = useState([])
     const history = useHistory()
-    const COLORS = ['#234E70', 'green', '#4B8FBF', '#534E70', 'black', '#404040', ' #DF7F50', 'blue'];
+    const COLORS = ['#234E70', '#548762', '#988655', '#c07680', '#9276c0', '#70a6c0', ' #DF7F50', '#6bc2a8'];
     
 
     const pieData = () => {
