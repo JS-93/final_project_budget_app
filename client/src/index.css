@@ -449,7 +449,7 @@ width: 100%;
 
 
 .transactions_background {
-  background: linear-gradient(90deg, #234E70, #FBF8BE);
+  background: linear-gradient(90deg, #b9e0e9, white);
   height: 130vh;
   overflow-y: hidden;
 }
@@ -656,11 +656,6 @@ width: 100%;
 }
 
 
-.new_t_form_input:focus {
-  outline: none; 
-  border: 2px solid #009879; 
-}
-
 .input_t_group p {
   margin: 0 auto;
   font-weight: bold;
@@ -696,12 +691,35 @@ width: 100%;
   justify-content: center;
   font-weight: bold;
 }
+.cat_t_table_container {
+
+    max-height: 350px; 
+    overflow-y: auto; 
+    width: 80%; 
+    margin: 0 auto; 
+    border-collapse: collapse;
+}
+
+.cat_t_table_container::-webkit-scrollbar-track {
+  background: #726d6d; 
+}
+
+.cat_t_table_container::-webkit-scrollbar-thumb {
+  background: white; 
+  border: none;
+}
+.cat_t_table_container::-webkit-scrollbar {
+  width: 12px; 
+}
+.cat_t_table_container::-webkit-scrollbar-thumb:active {
+  background: #555; 
+}
 
 .cat_t_table {
-  width: 90%;
+  width: 100%;
   border-collapse: collapse;
   background-color: rgb(177, 176, 176);
-  margin: 50px auto;
+  margin: 0 auto;
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 400px;
@@ -828,8 +846,27 @@ width: 100%;
 }
 
 .income_table_container {
-  margin: 0 auto;
-  width: 70%;
+  max-height: 300px; 
+  overflow-y: auto; 
+  width: 80%; 
+  margin: 0 auto; 
+  border-collapse: collapse;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
+}
+
+.income_table_container::-webkit-scrollbar-track {
+  background: #726d6d; 
+}
+
+.income_table_container::-webkit-scrollbar-thumb {
+  background: white; 
+  border: none;
+}
+.income_table_container::-webkit-scrollbar {
+  width: 12px; 
+}
+.income_table_container::-webkit-scrollbar-thumb:active {
+  background: #555; 
 }
 
 .new_income_table {
@@ -903,7 +940,14 @@ width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 90px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.label_x {
+  display: flex;
+  justify-content: center;
   font-weight: bold;
 }
 

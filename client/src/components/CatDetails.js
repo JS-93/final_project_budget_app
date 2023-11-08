@@ -85,8 +85,6 @@ const CategoryDetails = ({ currentUser }) => {
           month: 'numeric',
           day: 'numeric',
           year: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
         });
       };
       
@@ -122,7 +120,7 @@ const CategoryDetails = ({ currentUser }) => {
         </button>
       </div>
     
-    
+    <div className='cat_t_table_container'>
     <table className='cat_t_table'><thead>
         <tr>
             <th>Date</th>
@@ -143,7 +141,7 @@ const CategoryDetails = ({ currentUser }) => {
     </tbody>
         
         
-        </table></div></> ): (<><NavBar></NavBar><div className='no_tran_background'><h1>No transactions for {categoryName} <FontAwesomeIcon className='frown' icon={faFrown}/></h1><h1>Head to "See Transactions" to begin adding transactions.</h1></div></>)
+        </table></div></div></> ): (<><NavBar></NavBar><div className='no_tran_background'><h1>No transactions for {categoryName} <FontAwesomeIcon className='frown' icon={faFrown}/></h1><h1>Head to "See Transactions" to begin adding transactions.</h1></div></>)
 }
 
 export default CategoryDetails

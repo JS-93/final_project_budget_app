@@ -1,1 +1,7 @@
-## Pending README
+# Budge-It App
+
+## Summary
+
+Budge-it is a budget application clone used to track spending within different budget time frames. The application uses flask-sqlalchemy in the backend and react in the frontend. Redux and recharts were used on the frontednd for state management and data visualization. After signing up, a user is able to add beginning income and add budgets for 7 predefined categories. After adding the budgets, a user is able to add transactions to each budget depending on where they believe a transaction would best fit. The 7 categories are all encompassing categories used to reflect what an average adult would spend their money on in their day to day. Each income post request will post on the current day and each budget post request will post on the current day and extend to 30 days from that day. Transactions are similar to income post requests as they will post on the current day. Since each of the 7 budgets has a time frame, it's assumed that all budgets were made on the same day, (a user can update the budgets at any time as long as they are below the total income). If budgets were made on different days, depending if the user created a few budgets and then logged out and logged back in to create the rest a couple days later, the timeframe will only reflect the first budget's beginning and end date. One the first budget's end date has arrived, conditional routing logic will bring a user to a financial summary page on login to offer a printed out version of all transactions posted for each budget. A user then will be brought back to the route that creates and income and beginning budgets for the predefined categorries to begin a new financial period.
+
+## Frontend Routes 

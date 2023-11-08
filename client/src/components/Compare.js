@@ -94,8 +94,9 @@ const Compare = ( { currentUser }) => {
                     <Tooltip/>
                    
                     
-                    </LineChart></div>
+                    </LineChart></div><h1 className='label_x'>Users, (current user is green)</h1>
                     <div className='compare_info_container'>
+                      
                       <h1>By the looks of the chart {currentUser.username}, {compareSavingsRates(currentUser, users)}</h1>
                       {userRank === 0 && <h1><FontAwesomeIcon icon={faHandsClapping}/></h1>}
                       </div></div></>)

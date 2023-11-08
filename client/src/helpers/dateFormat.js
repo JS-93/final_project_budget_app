@@ -5,6 +5,7 @@ export const formatDate = (isoString) => {
   const dayOfMonth = date.getDate();
   const month = date.toLocaleDateString('en-US', { month: 'long' }); 
   const year = date.getFullYear();
+  
 
  
   const getOrdinalSuffix = (day) => {
@@ -18,6 +19,7 @@ export const formatDate = (isoString) => {
   };
 
   const ordinalSuffix = getOrdinalSuffix(dayOfMonth);
+
 
   return `${dayOfWeek}, ${month} ${dayOfMonth}${ordinalSuffix}, ${year}`;
 };
