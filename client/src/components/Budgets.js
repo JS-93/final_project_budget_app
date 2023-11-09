@@ -5,7 +5,7 @@ import CatBudgets from "./CatBudgets";
 import { useDispatch } from 'react-redux'
 import { updateCurrentUser } from "../actions/useractions";
 import { Link } from 'react-router-dom'
-import { Button, Input, Text } from '@chakra-ui/react';
+import { Button, Text } from '@chakra-ui/react';
   
 
 
