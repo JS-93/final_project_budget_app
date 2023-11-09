@@ -137,7 +137,7 @@ const UpdateBudgets = ( {currentUser} ) => {
                 data={pieData()}
                 cx='50%'
                 cy='50%'
-                outerRadius={350}
+                outerRadius={300}
                 fill='#8884d8'
                 dataKey='value'
                 >

@@ -11,7 +11,8 @@ const Compare = ( { currentUser }) => {
         fetch('/users')
         .then(resp => resp.json())
         .then(data => {
-            setUsers(data)
+          const usersWithTransactions = data.filter(user => user.transactions && user.transactions.length > 0);
+          setUsers(usersWithTransactions);
         })
     }, [])
 

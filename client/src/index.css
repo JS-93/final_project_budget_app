@@ -504,6 +504,7 @@ width: 100%;
 
 .transaction_table tbody tr {
   border-bottom: 1px solid #dddddd;
+  font-weight: bold;
 }
 
 .transaction_table tbody tr:nth-of-type(even) {

@@ -17,11 +17,10 @@ from models import *
 @app.route('/<int:id>')
 def index(id):
     if id is None:
-        # If no ID is provided, we assume it's the root URL
+        
         return render_template("index.html")
     else:
-        # If an ID is provided, handle it accordingly
-        # For example, you might fetch data based on the ID and pass it to the template
+        
         return render_template("page_with_id.html", id=id)
 
 
