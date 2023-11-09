@@ -3,15 +3,26 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session, make_response
+from flask import request, session, make_response, render_template
 from flask_restful import Resource
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
-
+import os
 
 
 from config import app, db, api
 from models import *
+
+@app.route('/', defaults={'id': None})
+@app.route('/<int:id>')
+def index(id):
+    if id is None:
+        # If no ID is provided, we assume it's the root URL
+        return render_template("index.html")
+    else:
+        # If an ID is provided, handle it accordingly
+        # For example, you might fetch data based on the ID and pass it to the template
+        return render_template("page_with_id.html", id=id)
 
 
 
@@ -382,5 +393,6 @@ api.add_resource(CategoryById, '/categories/<int:id>')
 
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+      port = int(os.environ.get('PORT', 5555))
+      app.run(host='0.0.0.0', port=port, debug=False)
 
