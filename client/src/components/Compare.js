@@ -69,7 +69,11 @@ const Compare = ( { currentUser }) => {
     
 
 
-    return (<><NavBar></NavBar><div className='compare_background'>
+    return (<>
+    <NavBar></NavBar>
+    {currentUser.transactions.length === 0  ? <div className='compare_background'><div className="compare_title_container"><p className="compare_chart_title">Please add transactions!</p></div></div> : (
+    <div className='compare_background'>
+      
       <div className="compare_title_container">
     <h1 className="compare_chart_title">User Comparison Chart</h1></div>
     <div className="compare_chart_container">
@@ -100,10 +104,11 @@ const Compare = ( { currentUser }) => {
                       
                       <h1>By the looks of the chart {currentUser.username}, {compareSavingsRates(currentUser, users)}</h1>
                       {userRank === 0 && <h1><FontAwesomeIcon icon={faHandsClapping}/></h1>}
-                      </div></div></>)
+                      </div></div>)}</>)
 }
 
 
 export default Compare
+
 
 
