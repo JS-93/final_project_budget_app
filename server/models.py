@@ -82,8 +82,7 @@ class Income(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
-    def __repr__(self):
-        return f'<Income {self.amount}, {self.description}, {self.date}>'
+  
     
 class Budget(db.Model, SerializerMixin):
     __tablename__ =  'budgets'
@@ -102,8 +101,5 @@ class Budget(db.Model, SerializerMixin):
             raise AssertionError('Amount must be greater than or equal to 0.')
         return amount
 
-
-    def __repr__(self):
-        return f'<Budget {self.amount}, {self.start_date}, {self.end_date}>'
 
 
