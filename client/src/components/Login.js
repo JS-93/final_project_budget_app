@@ -11,6 +11,7 @@ import { Button } from "@chakra-ui/react";
 const Login = () => {
     const [isError, setIsError] = useState(false);
     const [newUser, setNewUser] = useState(false)
+    const [message, setMessage] = useState('')
     const dispatch = useDispatch();
 
 
@@ -47,6 +48,7 @@ const Login = () => {
             .then(data => {
                 if(data.user) {
                     dispatch(setUser(data.user))
+                    setMessage('Logged in successfully!')
                     setIsError(false)
                     resetForm();
                 }
@@ -89,6 +91,7 @@ const Login = () => {
                 <Button variant='solid' className='beginning_form_button' type='submit'>Login</Button><Button variant='solid' className='beginning_form_button' onClick={() => setNewUser(true)}>New User?</Button>
             </form>
             {isError && <p className='begin_form_error'>Username or password not found.</p>}
+            <p className='begin_form_error'>{message}</p>
             
         </div>) : (<Signup/>)}</>
     
